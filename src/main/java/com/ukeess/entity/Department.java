@@ -24,7 +24,7 @@ public class Department {
     private Integer id;
 
     @NotEmpty
-    @Size(max = 25)
+    @Size(min = 1, max = 25)
     @Column(name = "dpName", length = 25)
     private String name;
 }
