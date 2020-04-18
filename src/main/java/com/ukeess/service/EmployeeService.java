@@ -19,5 +19,5 @@ public interface EmployeeService {
 
     void deleteById(Integer id);
 
-    Page<List<Employee>> searchByNameStartsWith(String name, Pageable pageable);
+    List<Employee> searchByNameStartsWith(String name);
 }

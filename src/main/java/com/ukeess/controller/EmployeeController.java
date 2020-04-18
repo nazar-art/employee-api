@@ -62,10 +62,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public Page<List<Employee>> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet,
-                                                                @RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                                                                @RequestParam(value = "size", defaultValue = "1") int pageSize) {
-        return employeeService.searchByNameStartsWith(nameSnippet, PageRequest.of(pageNumber, pageSize));
+    public List<Employee> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
+        return employeeService.searchByNameStartsWith(nameSnippet);
     }
 
 }
