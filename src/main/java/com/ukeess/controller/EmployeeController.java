@@ -37,8 +37,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", required = false) int pageNumber,
-                                                           @RequestParam(value = "size", required = false) int pageSize) {
+    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+                                                           @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
@@ -50,7 +50,6 @@ public class EmployeeController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody @Valid Employee employee) {
