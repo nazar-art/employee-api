@@ -37,8 +37,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
-                                                           @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
+    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
@@ -52,10 +52,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody @Valid Employee employee) {
-        return ResponseEntity.ok(
-                employeeService.create(employee)
-        );
+    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody @Valid Employee newEmployee) {
+        return ResponseEntity.ok(employeeService.update(id, newEmployee));
     }
 
     @DeleteMapping("/{id}")
@@ -65,8 +63,8 @@ public class EmployeeController {
 
     @GetMapping("/search")
     public Page<List<Employee>> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet,
-                                                                @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
-                                                                @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
+                                                                @RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                                                                @RequestParam(value = "size", defaultValue = "1") int pageSize) {
         return employeeService.searchByNameStartsWith(nameSnippet, PageRequest.of(pageNumber, pageSize));
     }
 

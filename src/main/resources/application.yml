@@ -3,7 +3,7 @@ spring:
     name: employee-api
 
   datasource:
-#    url: jdbc:mysql://localhost:3306/ukeess_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    #    url: jdbc:mysql://localhost:3306/ukeess_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     url: jdbc:mysql://localhost:3306/ukeess_db?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
     username: root
     password: secret
@@ -22,5 +22,5 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
 
 logging:
-    level:
-      com.ukeess: debug
+  level:
+    com.ukeess: debug

@@ -14,9 +14,9 @@ import java.util.Collection;
 @Service
 @AllArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
-    
+
     private DepartmentRepository departmentRepository;
-    
+
     @Override
     public Collection<Department> findAllDepartments() {
         return (Collection<Department>) departmentRepository.findAll();

@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @Table(name = "tblEmployees")
 public class Employee {
     @Id
-    @Column(name = "empId")
+    @Column(name = "empID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -34,6 +34,6 @@ public class Employee {
     private Boolean active;
 
     @ManyToOne
-    @JoinColumn(name="emp_dpID")
+    @JoinColumn(name = "emp_dpID")
     private Department department;
 }

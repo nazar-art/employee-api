@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Table(name = "tblDepartments")
 public class Department {
     @Id
-    @Column(name = "dpId")
+    @Column(name = "dpID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

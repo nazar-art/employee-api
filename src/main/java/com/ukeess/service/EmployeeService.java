@@ -9,11 +9,13 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
+    Employee create(Employee employee);
+
     Page<Employee> findAll(Pageable pageable);
 
     Optional<Employee> findById(Integer id);
 
-    Employee create(Employee employee);
+    Employee update(Integer id, Employee employee);
 
     void deleteById(Integer id);
 
