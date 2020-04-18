@@ -1,7 +1,7 @@
 package com.ukeess.service.impl;
 
 import com.ukeess.entity.Employee;
-import com.ukeess.exception.NotPresentedInDbException;
+import com.ukeess.exception.NotFoundInDbException;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setId(id);
             return employeeRepository.save(employee);
         }
-        throw new NotPresentedInDbException(id);
+        throw new NotFoundInDbException(id);
     }
 
     @Override
