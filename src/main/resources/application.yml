@@ -39,4 +39,4 @@ spring:
 logging:
   level:
     com.ukeess: debug
-    org.hibernate: debug
+#    org.hibernate: debug

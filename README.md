@@ -1,4 +1,11 @@
 
+---
+
+Swagger UI available:
+
+    http://localhost:8080/api/swagger-ui.html  
+    
+Also, you can try test API there as well instead of Postman.    
 
 ---
 
@@ -6,7 +13,7 @@
 
 #### Backend task
 
-- [ ] Add Swagger annotations
+- [x] Add Swagger annotations
 - [ ] Add jwt security to the application
 - [ ] Replace JPA framework with custom implementation
 
@@ -18,4 +25,4 @@
 
 #### Final step
 - [ ] describe how to run everything at readme file
-- [ ] zip project
+- [ ] zip project with UI

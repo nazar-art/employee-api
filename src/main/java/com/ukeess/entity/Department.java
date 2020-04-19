@@ -1,5 +1,6 @@
 package com.ukeess.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name = "tblDepartments")
+@ApiModel(description = "Department entity")
 public class Department {
     @Id
     @Column(name = "dpID")

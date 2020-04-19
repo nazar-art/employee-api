@@ -6,7 +6,7 @@ import com.ukeess.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,8 +19,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Collection<Department> findAllDepartments() {
-        return (Collection<Department>) departmentRepository.findAll();
+    public List<Department> findAllDepartments() {
+        return (List<Department>) departmentRepository.findAll();
     }
 
     @Override
