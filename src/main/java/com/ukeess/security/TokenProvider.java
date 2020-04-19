@@ -48,7 +48,7 @@ public class TokenProvider {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours is expiration date
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours is expiration date
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
