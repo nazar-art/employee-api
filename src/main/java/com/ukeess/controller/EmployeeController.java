@@ -39,7 +39,9 @@ public class EmployeeController {
     @ApiOperation(value = "Create new Employee",
             notes = "Provide an Employee to be added in a body",
             response = Employee.class)
-    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid Employee employee) {
+    public ResponseEntity<Employee> createEmployee(
+            @ApiParam(value = "Employee object to be created", required = true)
+            @RequestBody @Valid Employee employee) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(employeeService.create(employee));
     }

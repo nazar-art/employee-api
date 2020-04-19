@@ -5,6 +5,7 @@ import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.security.model.AuthRequestDto;
 import com.ukeess.security.model.AuthResponseDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * @author Nazar Lelyak.
@@ -31,14 +34,17 @@ public class AuthController {
 
     @PostMapping
     @RequestMapping("/authenticate")
-    public ResponseEntity<AuthResponseDto> createAuthenticationToken(@RequestBody AuthRequestDto authRequest) throws Exception {
+    @ApiOperation(value = "Authenticate for working with API",
+            notes = "Provide a valid Credentials in a body",
+            response = AuthResponseDto.class)
+    public ResponseEntity<AuthResponseDto> createAuthenticationToken(@RequestBody @Valid AuthRequestDto authRequest) {
 
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new RuntimeException("Incorrect username or password", e);
         }
 
         UserDetails userDetails = userDetailsServiceMock.loadUserByUsername(authRequest.getUsername());
