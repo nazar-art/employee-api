@@ -2,6 +2,8 @@ package com.ukeess.controller;
 
 import com.ukeess.entity.Employee;
 import com.ukeess.service.EmployeeService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,38 +36,63 @@ public class EmployeeController {
 
 
     @PostMapping
+    @ApiOperation(value = "Create new Employee",
+            notes = "Provide an Employee to be added in a body",
+            response = Employee.class)
     public ResponseEntity<Employee> createEmployee(@RequestBody @Valid Employee employee) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(employeeService.create(employee));
     }
 
     @GetMapping
-    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
+    @ApiOperation(value = "Find All Employees", response = Employee.class)
+    public ResponseEntity<Page<Employee>> findAllEmployees(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> findEmployeeById(@PathVariable int id) {
+    @ApiOperation(value = "Find Employee by ID", response = Employee.class,
+            notes = "Provide an id to look up specific employee")
+    public ResponseEntity<Employee> findEmployeeById(
+            @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
+            @PathVariable int id) {
         return employeeService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody @Valid Employee newEmployee) {
+    @ApiOperation(value = "Update an Employee", response = Employee.class,
+            notes = "Provide an id of employee for update, and new representation of employee")
+    public ResponseEntity<Employee> updateEmployee(
+            @ApiParam(value = "ID value for the employee you need to update", required = true)
+            @PathVariable int id,
+            @ApiParam(value = "Updated instance for employee object", required = true)
+            @RequestBody @Valid Employee newEmployee) {
+
         return ResponseEntity.ok(employeeService.update(id, newEmployee));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable int id) {
+    @ApiOperation(value = "Delete an Employee",
+            notes = "Provide an employee's id")
+    public void deleteEmployee(
+            @ApiParam(value = "ID value for the employee you need to delete", required = true)
+            @PathVariable int id) {
         employeeService.deleteById(id);
     }
 
     @GetMapping("/search")
-    public List<Employee> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
+    @ApiOperation(notes = "Provide a name snippet", response = Employee.class, responseContainer = "List",
+            value = "Search for all Employees which name starts with provided name snippet")
+    public List<Employee> searchEmployeesByNameStartsWith(
+            @ApiParam(value = "Name snippet for the employee you looking for", required = true)
+            @RequestParam(value = "name") String nameSnippet) {
+
         return employeeService.searchByNameStartsWith(nameSnippet);
     }
 }

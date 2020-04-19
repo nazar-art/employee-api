@@ -2,6 +2,8 @@ package com.ukeess.controller;
 
 import com.ukeess.entity.Department;
 import com.ukeess.service.DepartmentService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Nazar Lelyak.
@@ -23,13 +26,21 @@ public class DepartmentController {
 
     private DepartmentService departmentService;
 
+
     @GetMapping
-    public Collection<Department> findAll() {
+    @ApiOperation(value = "Find All Departments", responseContainer = "List", response = Department.class)
+    public List<Department> findAllDepartments() {
         return departmentService.findAllDepartments();
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Department> findDepartmentById(@PathVariable int id) {
+    @ApiOperation(value = "Find Department by ID",
+            notes = "Provide an id to look up specific department",
+            response = Department.class)
+    public ResponseEntity<Department> findDepartmentById(
+            @ApiParam(value = "ID value for the department you need to retrieve", required = true)
+            @PathVariable int id) {
         return departmentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
