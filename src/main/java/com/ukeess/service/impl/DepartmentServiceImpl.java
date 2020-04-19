@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author Nazar Lelyak.
@@ -20,5 +21,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Collection<Department> findAllDepartments() {
         return (Collection<Department>) departmentRepository.findAll();
+    }
+
+    @Override
+    public Optional<Department> findById(Integer id) {
+        return departmentRepository.findById(id);
     }
 }

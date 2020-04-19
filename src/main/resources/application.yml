@@ -1,7 +1,16 @@
+server:
+  error:
+    path: /error
+  servlet:
+    context-path: /api
+
 spring:
   application:
     name: employee-api
 
+  # ===============================
+  # = DATA SOURCE
+  # ===============================
   datasource:
     #    url: jdbc:mysql://localhost:3306/ukeess_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     url: jdbc:mysql://localhost:3306/ukeess_db?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
@@ -11,6 +20,9 @@ spring:
     platform: mysql
     initialization-mode: always
 
+  # ===============================
+  # = JPA / HIBERNATE
+  # ===============================
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     open-in-view: false
@@ -21,6 +33,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
 
+# ===============================
+# = LOGGING
+# ===============================
 logging:
   level:
     com.ukeess: debug
+    org.hibernate: debug
