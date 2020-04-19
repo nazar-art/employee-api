@@ -2,6 +2,7 @@ package com.ukeess.service.impl;
 
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.NotFoundInDbException;
+import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private DepartmentRepository departmentRepository;
 
     @Override
     public Employee create(Employee employee) {
@@ -38,7 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee update(Integer id, Employee employee) {
-        if (employeeRepository.existsById(id)) {
+        if (employeeRepository.existsById(id)
+                && departmentRepository.existsById(employee.getDepartment().getId())) {
             employee.setId(id);
             return employeeRepository.save(employee);
         }

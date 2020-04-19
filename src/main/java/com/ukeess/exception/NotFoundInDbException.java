@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @author Nazar Lelyak.
  */
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "entity is not found in DB")
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Entity is not found in DB")
 public class NotFoundInDbException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

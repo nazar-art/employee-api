@@ -5,6 +5,7 @@ import com.ukeess.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +27,16 @@ import java.util.List;
 //        methods = {RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/employees")
+@RequestMapping("/v1/employees")
 public class EmployeeController {
 
     private EmployeeService employeeService;
 
+
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody @Valid Employee employee) {
-        return ResponseEntity.ok(employeeService.create(employee));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(employeeService.create(employee));
     }
 
     @GetMapping
@@ -65,5 +68,4 @@ public class EmployeeController {
     public List<Employee> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
         return employeeService.searchByNameStartsWith(nameSnippet);
     }
-
 }
