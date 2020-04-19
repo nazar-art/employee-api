@@ -25,6 +25,10 @@ Spring Security is configured. So you need to authenticate first:
     {
         "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA1OTAsImlhdCI6MTU4NzMyNDU5MH0.Epf0M-c6sQWWOBLQW3FIhJPffoWys7AjGuIrkH1MgQ0"
     }
+    
+You could use nice [HTTP client](https://httpie.org/) for execution from terminal.
+
+## Step 3
 
 Any next request should contain that token at header
     
