@@ -1,9 +1,8 @@
 package com.ukeess.controller;
 
-import com.ukeess.entity.Employee;
+import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,28 +33,28 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid Employee employee) {
+    public ResponseEntity createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(employeeService.create(employee));
+                .body(employeeService.create(employeeDTO));
     }
 
     @GetMapping
-    public ResponseEntity<Page<Employee>> findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
+    public ResponseEntity findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> findEmployeeById(@PathVariable int id) {
+    public ResponseEntity findEmployeeById(@PathVariable int id) {
         return employeeService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody @Valid Employee newEmployee) {
+    public ResponseEntity updateEmployee(@PathVariable int id, @RequestBody @Valid EmployeeDTO newEmployee) {
         return ResponseEntity.ok(employeeService.update(id, newEmployee));
     }
 
@@ -65,7 +64,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public List<Employee> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
+    public List<EmployeeDTO> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
         return employeeService.searchByNameStartsWith(nameSnippet);
     }
 }

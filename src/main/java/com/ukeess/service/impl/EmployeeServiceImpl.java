@@ -1,10 +1,12 @@
 package com.ukeess.service.impl;
 
+import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.NotFoundInDbException;
 import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
+import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,26 +26,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Employee create(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeDTO create(EmployeeDTO employeeDTO) {
+        Employee empl = EmployeeMapper.dtoToEmployee(employeeDTO);
+        return EmployeeMapper.employeeToDTO(employeeRepository.save(empl));
     }
 
     @Override
-    public Page<Employee> findAll(Pageable pageable) {
-        return employeeRepository.findAll(pageable);
+    public Page<EmployeeDTO> findAll(Pageable pageable) {
+        return employeeRepository.findAll(pageable)
+                .map(EmployeeMapper::employeeToDTO);
     }
 
     @Override
-    public Optional<Employee> findById(Integer id) {
-        return employeeRepository.findById(id);
+    public Optional<EmployeeDTO> findById(Integer id) {
+        return employeeRepository.findById(id)
+                .map(EmployeeMapper::employeeToDTO);
     }
 
     @Override
-    public Employee update(Integer id, Employee employee) {
+    public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         if (employeeRepository.existsById(id)
-                && departmentRepository.existsById(employee.getDepartment().getId())) {
-            employee.setId(id);
-            return employeeRepository.save(employee);
+                && departmentRepository.existsById(dto.getDepartmentId())) {
+
+            Employee employee = EmployeeMapper.dtoToEmployee(dto);
+            return EmployeeMapper.employeeToDTO(employeeRepository.save(employee));
         }
         throw new NotFoundInDbException(id);
     }
@@ -54,8 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> searchByNameStartsWith(String name) {
-        return employeeRepository.findAllByNameStartingWith(name);
+    public List<EmployeeDTO> searchByNameStartsWith(String name) {
+        return EmployeeMapper.employeesToDtoList(employeeRepository.findAllByNameStartingWith(name));
     }
 
 }

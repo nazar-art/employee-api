@@ -1,6 +1,9 @@
 package com.ukeess.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,15 +21,19 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tblEmployees")
 public class Employee {
+
     @Id
     @Column(name = "empID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty
-    @Size(min = 1, max = 25)
+    @Size(min = 2, max = 20)
     @Column(name = "empName", length = 25)
     private String name;
 
