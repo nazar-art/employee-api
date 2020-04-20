@@ -2,7 +2,10 @@ package com.ukeess.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +23,9 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tblEmployees")
 @ApiModel(description = "Employee entity")
 public class Employee {
@@ -31,7 +37,7 @@ public class Employee {
     private Integer id;
 
     @NotEmpty
-    @Size(min = 1, max = 25)
+    @Size(min = 2, max = 20)
     @Column(name = "empName", length = 25)
     @ApiModelProperty(notes = "The employee name")
     private String name;

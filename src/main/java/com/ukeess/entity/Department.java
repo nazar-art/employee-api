@@ -1,7 +1,10 @@
 package com.ukeess.entity;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,9 +20,13 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tblDepartments")
 @ApiModel(description = "Department entity")
 public class Department {
+
     @Id
     @Column(name = "dpID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

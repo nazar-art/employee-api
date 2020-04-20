@@ -1,6 +1,6 @@
 package com.ukeess.service;
 
-import com.ukeess.entity.Employee;
+import com.ukeess.dto.EmployeeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,15 +9,15 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
-    Employee create(Employee employee);
+    EmployeeDTO create(EmployeeDTO employeeDTO);
 
-    Page<Employee> findAll(Pageable pageable);
+    Page<EmployeeDTO> findAll(Pageable pageable);
 
-    Optional<Employee> findById(Integer id);
+    Optional<EmployeeDTO> findById(Integer id);
 
-    Employee update(Integer id, Employee employee);
+    EmployeeDTO update(Integer id, EmployeeDTO employeeDTO);
 
     void deleteById(Integer id);
 
-    List<Employee> searchByNameStartsWith(String name);
+    List<EmployeeDTO> searchByNameStartsWith(String name);
 }

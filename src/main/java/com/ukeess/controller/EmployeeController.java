@@ -1,11 +1,10 @@
 package com.ukeess.controller;
 
-import com.ukeess.entity.Employee;
+import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +41,9 @@ public class EmployeeController {
     public ResponseEntity<Employee> createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid Employee employee) {
+    public ResponseEntity createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(employeeService.create(employee));
+                .body(employeeService.create(employeeDTO));
     }
 
     @GetMapping
@@ -51,6 +51,8 @@ public class EmployeeController {
     public ResponseEntity<Page<Employee>> findAllEmployees(
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
+    public ResponseEntity findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
@@ -59,7 +61,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     @ApiOperation(value = "Find Employee by ID", response = Employee.class,
             notes = "Provide an id to look up specific employee")
-    public ResponseEntity<Employee> findEmployeeById(
+    public ResponseEntity findEmployeeById(
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
             @PathVariable int id) {
         return employeeService.findById(id)
@@ -74,7 +76,7 @@ public class EmployeeController {
             @ApiParam(value = "ID value for the employee you need to update", required = true)
             @PathVariable int id,
             @ApiParam(value = "Updated instance for employee object", required = true)
-            @RequestBody @Valid Employee newEmployee) {
+            @RequestBody @Valid EmployeeDTO newEmployee) {
 
         return ResponseEntity.ok(employeeService.update(id, newEmployee));
     }
@@ -95,6 +97,7 @@ public class EmployeeController {
             @ApiParam(value = "Name snippet for the employee you looking for", required = true)
             @RequestParam(value = "name") String nameSnippet) {
 
+    public List<EmployeeDTO> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
         return employeeService.searchByNameStartsWith(nameSnippet);
     }
 }
