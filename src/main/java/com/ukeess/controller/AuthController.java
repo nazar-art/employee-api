@@ -1,10 +1,11 @@
 package com.ukeess.controller;
 
+import com.ukeess.exception.IncorrectUserCredentialsException;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.constant.SecurityConstants;
-import com.ukeess.security.model.AuthRequestDto;
-import com.ukeess.security.model.AuthResponseDto;
+import com.ukeess.security.model.AuthRequestDTO;
+import com.ukeess.security.model.AuthResponseDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -36,15 +37,15 @@ public class AuthController {
     @RequestMapping("/authenticate")
     @ApiOperation(value = "Authenticate for working with API",
             notes = "Provide a valid Credentials in a body",
-            response = AuthResponseDto.class)
-    public ResponseEntity<AuthResponseDto> createAuthenticationToken(@RequestBody @Valid AuthRequestDto authRequest) {
+            response = AuthResponseDTO.class)
+    public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@RequestBody @Valid AuthRequestDTO authRequest) {
 
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Incorrect username or password", e);
+            throw new IncorrectUserCredentialsException();
         }
 
         UserDetails userDetails = userDetailsServiceMock.loadUserByUsername(authRequest.getUsername());
@@ -53,7 +54,7 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(SecurityConstants.AUTHORIZATION_HEADER, String.format("%s%s", SecurityConstants.TOKEN_BEARER_PREFIX, jwt));
 
-        return new ResponseEntity<>(new AuthResponseDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new AuthResponseDTO(jwt), httpHeaders, HttpStatus.OK);
     }
 
 }

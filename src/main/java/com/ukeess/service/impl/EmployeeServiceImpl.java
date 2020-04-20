@@ -1,7 +1,7 @@
 package com.ukeess.service.impl;
 
 import com.ukeess.entity.Employee;
-import com.ukeess.exception.NotFoundInDbException;
+import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setId(id);
             return employeeRepository.save(employee);
         }
-        throw new NotFoundInDbException(id);
+        throw new EntityNotFoundException(id);
     }
 
     @Override

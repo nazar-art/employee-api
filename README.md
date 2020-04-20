@@ -6,9 +6,17 @@ Run application by `./mvnw spring-boot:run` command
 
 ## Step 2
 
-Spring Security is configured. So you need to authenticate first:
+Spring Security is configured. So you need to authenticate first
 
-    http :8080/api/authenticate username=ukeess password=ukeess
+    POST http://localhost:8080/api/authenticate 
+    {
+        username: harry
+        password: potter
+    }
+    
+Example of call from terminal with [HTTP client](https://httpie.org/) 
+
+    http :8080/api/authenticate username=harry password=potter
     
     HTTP/1.1 200 
     Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA1OTAsImlhdCI6MTU4NzMyNDU5MH0.Epf0M-c6sQWWOBLQW3FIhJPffoWys7AjGuIrkH1MgQ0
@@ -23,16 +31,15 @@ Spring Security is configured. So you need to authenticate first:
     X-XSS-Protection: 1; mode=block
     
     {
-        "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA1OTAsImlhdCI6MTU4NzMyNDU5MH0.Epf0M-c6sQWWOBLQW3FIhJPffoWys7AjGuIrkH1MgQ0"
+        "token": "<token-value-here>"
     }
     
-You could use nice [HTTP client](https://httpie.org/) for execution from terminal.
 
 ## Step 3
 
 Any next request should contain that token at header
     
-    http :8080/api/v1/employees/4 Authorization:Bearer\ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA5MjAsImlhdCI6MTU4NzMyNDkyMH0.jJG6GCgA-eVFlyh4S-xdGtO9OkNmU_cX1JFuc9xM03Y
+    http :8080/api/v1/employees/4 Authorization:Bearer\ <token-value-here>
     
     HTTP/1.1 200 
     Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -72,6 +79,7 @@ Also, you can try test API there as well instead of Postman.
 
 - [x] Add Swagger annotations
 - [x] Add jwt security to the application
+- [ ] Replace response from controller to DTO object
 - [ ] Replace JPA framework with custom implementation
 
 #### UI tasks

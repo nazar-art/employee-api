@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Nazar Lelyak.
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Entity is not found in DB")
-public class NotFoundInDbException extends RuntimeException {
+public class EntityNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
-    private static final String NOT_FOUND_MESSAGE = "Entity, with id: %s is NOT FOUND in DB.";
+    private static final String NOT_FOUND_MESSAGE = "Entity, with id: %s is NOT FOUND";
 
-    public NotFoundInDbException(int id) {
+    public EntityNotFoundException(int id) {
         super(String.format(NOT_FOUND_MESSAGE, id));
     }
 }

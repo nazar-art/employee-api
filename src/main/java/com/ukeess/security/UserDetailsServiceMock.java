@@ -15,6 +15,6 @@ import java.util.Collections;
 public class UserDetailsServiceMock implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return new User("ukeess", "ukeess", Collections.emptyList());
+        return new User("harry", "potter", Collections.emptyList());
     }
 }
