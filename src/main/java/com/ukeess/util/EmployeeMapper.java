@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class EmployeeMapper {
 
-    public EmployeeDTO employeeToDTO(Employee employee) {
+    public EmployeeDTO mapToDTO(Employee employee) {
         Department empDepartment = employee.getDepartment();
         return EmployeeDTO.builder()
                 .id(employee.getId())
@@ -25,7 +25,7 @@ public class EmployeeMapper {
                 .build();
     }
 
-    public static Employee dtoToEmployee(EmployeeDTO dto) {
+    public Employee mapToEmployee(EmployeeDTO dto) {
         Department dep = Department.builder()
                 .id(dto.getDepartmentId())
                 .name(dto.getDepartmentName())
@@ -38,9 +38,9 @@ public class EmployeeMapper {
                 .build();
     }
 
-    public static List<EmployeeDTO> employeesToDtoList(List<Employee> employees) {
+    public List<EmployeeDTO> mapToDtoList(List<Employee> employees) {
         return employees.stream()
-                .map(EmployeeMapper::employeeToDTO)
+                .map(EmployeeMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 }

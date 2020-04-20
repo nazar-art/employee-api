@@ -3,7 +3,6 @@ package com.ukeess.service.impl;
 import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
@@ -23,33 +22,30 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
-    private DepartmentRepository departmentRepository;
 
     @Override
     public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        Employee empl = EmployeeMapper.dtoToEmployee(employeeDTO);
-        return EmployeeMapper.employeeToDTO(employeeRepository.save(empl));
+        Employee empl = EmployeeMapper.mapToEmployee(employeeDTO);
+        return EmployeeMapper.mapToDTO(employeeRepository.save(empl));
     }
 
     @Override
     public Page<EmployeeDTO> findAll(Pageable pageable) {
         return employeeRepository.findAll(pageable)
-                .map(EmployeeMapper::employeeToDTO);
+                .map(EmployeeMapper::mapToDTO);
     }
 
     @Override
     public Optional<EmployeeDTO> findById(Integer id) {
         return employeeRepository.findById(id)
-                .map(EmployeeMapper::employeeToDTO);
+                .map(EmployeeMapper::mapToDTO);
     }
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-        if (employeeRepository.existsById(id)
-                && departmentRepository.existsById(dto.getDepartmentId())) {
-
-            Employee employee = EmployeeMapper.dtoToEmployee(dto);
-            return EmployeeMapper.employeeToDTO(employeeRepository.save(employee));
+        if (employeeRepository.existsById(id)) {
+            Employee employee = EmployeeMapper.mapToEmployee(dto);
+            return EmployeeMapper.mapToDTO(employeeRepository.save(employee));
         }
         throw new EntityNotFoundException(id);
     }
@@ -61,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> searchByNameStartsWith(String name) {
-        return EmployeeMapper.employeesToDtoList(employeeRepository.findAllByNameStartingWith(name));
+        return EmployeeMapper.mapToDtoList(employeeRepository.findAllByNameStartingWith(name));
     }
 
 }

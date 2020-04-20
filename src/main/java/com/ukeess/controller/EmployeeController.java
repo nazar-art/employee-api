@@ -5,6 +5,7 @@ import com.ukeess.service.EmployeeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,29 +38,26 @@ public class EmployeeController {
     @PostMapping
     @ApiOperation(value = "Create new Employee",
             notes = "Provide an Employee to be added in a body",
-            response = Employee.class)
-    public ResponseEntity<Employee> createEmployee(
+            response = EmployeeDTO.class)
+    public ResponseEntity<EmployeeDTO> createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
-            @RequestBody @Valid Employee employee) {
-    public ResponseEntity createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
+            @RequestBody @Valid EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(employeeService.create(employeeDTO));
     }
 
     @GetMapping
-    @ApiOperation(value = "Find All Employees", response = Employee.class)
-    public ResponseEntity<Page<Employee>> findAllEmployees(
+    @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
+    public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
-    public ResponseEntity findAllEmployees(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                                           @RequestParam(value = "size", defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Find Employee by ID", response = Employee.class,
+    @ApiOperation(value = "Find Employee by ID", response = EmployeeDTO.class,
             notes = "Provide an id to look up specific employee")
     public ResponseEntity findEmployeeById(
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
@@ -70,9 +68,9 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update an Employee", response = Employee.class,
+    @ApiOperation(value = "Update an Employee", response = EmployeeDTO.class,
             notes = "Provide an id of employee for update, and new representation of employee")
-    public ResponseEntity<Employee> updateEmployee(
+    public ResponseEntity<EmployeeDTO> updateEmployee(
             @ApiParam(value = "ID value for the employee you need to update", required = true)
             @PathVariable int id,
             @ApiParam(value = "Updated instance for employee object", required = true)
@@ -91,13 +89,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(notes = "Provide a name snippet", response = Employee.class, responseContainer = "List",
+    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class, responseContainer = "List",
             value = "Search for all Employees which name starts with provided name snippet")
-    public List<Employee> searchEmployeesByNameStartsWith(
+    public List<EmployeeDTO> searchEmployeesByNameStartsWith(
             @ApiParam(value = "Name snippet for the employee you looking for", required = true)
             @RequestParam(value = "name") String nameSnippet) {
 
-    public List<EmployeeDTO> searchEmployeesByNameStartsWith(@RequestParam(value = "name") String nameSnippet) {
         return employeeService.searchByNameStartsWith(nameSnippet);
     }
 }

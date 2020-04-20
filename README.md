@@ -79,7 +79,7 @@ Also, you can try test API there as well instead of Postman.
 
 - [x] Add Swagger annotations
 - [x] Add jwt security to the application
-- [ ] Replace response from controller to DTO object
+- [x] Replace response from controller to DTO object
 - [ ] Replace JPA framework with custom implementation
 
 #### UI tasks

@@ -1,6 +1,5 @@
 package com.ukeess.entity;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +23,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tblDepartments")
-@ApiModel(description = "Department entity")
 public class Department {
 
     @Id
