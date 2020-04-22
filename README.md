@@ -74,3 +74,27 @@ Swagger UI available:
     
 Also, you can try test API there as well instead of Postman.    
 
+---
+
+### TODO LIST:
+
+#### Backend task
+
+- [x] Add Swagger annotations
+- [x] Add jwt security to the application
+- [x] Replace response from controller to DTO object
+- [x] Replace JPA framework with custom implementation:
+    - [x] add search for starts with for employee
+    - [ ] check about adding repository level between SERVICE and DAO layer
+    - [ ] pagination for API
+
+
+#### UI tasks
+
+- [ ] Create Angular Client with One page + Ajax 
+- [ ] implement Ajax for UI
+- [ ] Login for UI 
+
+#### Final step
+- [ ] describe how to run everything at readme file
+- [ ] zip project with UI
