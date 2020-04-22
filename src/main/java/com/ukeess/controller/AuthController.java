@@ -2,10 +2,10 @@ package com.ukeess.controller;
 
 import com.ukeess.exception.InvalidUserCredentialsException;
 import com.ukeess.model.constant.SecurityConstants;
+import com.ukeess.model.dto.AuthRequestDTO;
+import com.ukeess.model.dto.AuthResponseDTO;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceMock;
-import com.ukeess.security.model.AuthRequestDTO;
-import com.ukeess.security.model.AuthResponseDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
