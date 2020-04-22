@@ -1,12 +1,10 @@
 package com.ukeess.controller;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -25,8 +24,6 @@ import java.util.List;
 /**
  * @author Nazar Lelyak.
  */
-//@CrossOrigin(origins = "http://localhost:4200",
-//        methods = {RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/employees")
@@ -39,20 +36,22 @@ public class EmployeeController {
     @ApiOperation(value = "Create new Employee",
             notes = "Provide an Employee to be added in a body",
             response = EmployeeDTO.class)
-    public ResponseEntity<EmployeeDTO> createEmployee(
+    public ResponseEntity createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid EmployeeDTO employeeDTO) {
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(employeeService.create(employeeDTO));
     }
 
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
-    public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
+    public ResponseEntity findAllEmployees(
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
         return ResponseEntity.ok(
-                employeeService.findAll(PageRequest.of(pageNumber, pageSize))
+//                employeeService.findAll(PageRequest.of(pageNumber, pageSize))
+                employeeService.findAll()
         );
     }
 
@@ -70,7 +69,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @ApiOperation(value = "Update an Employee", response = EmployeeDTO.class,
             notes = "Provide an id of employee for update, and new representation of employee")
-    public ResponseEntity<EmployeeDTO> updateEmployee(
+    public ResponseEntity updateEmployee(
             @ApiParam(value = "ID value for the employee you need to update", required = true)
             @PathVariable int id,
             @ApiParam(value = "Updated instance for employee object", required = true)
@@ -80,6 +79,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Delete an Employee",
             notes = "Provide an employee's id")
     public void deleteEmployee(

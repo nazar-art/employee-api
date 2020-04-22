@@ -1,4 +1,4 @@
-package com.ukeess.security.constant;
+package com.ukeess.model.constant;
 
 import lombok.experimental.UtilityClass;
 

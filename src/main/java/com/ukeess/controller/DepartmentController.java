@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Nazar Lelyak.
  */
-//@CrossOrigin(origins = "http://localhost:4200",
-//        methods = {RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/departments")
@@ -25,13 +23,11 @@ public class DepartmentController {
 
     private DepartmentService departmentService;
 
-
     @GetMapping
     @ApiOperation(value = "Find All Departments", responseContainer = "List", response = Department.class)
-    public List<Department> findAllDepartments() {
-        return departmentService.findAllDepartments();
+    public ResponseEntity<Collection<Department>> findAllDepartments() {
+        return ResponseEntity.ok(departmentService.findAllDepartments());
     }
-
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Find Department by ID",

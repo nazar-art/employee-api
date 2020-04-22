@@ -1,12 +1,12 @@
 package com.ukeess.service.impl;
 
+import com.ukeess.dao.impl.DepartmentDAO;
 import com.ukeess.entity.Department;
-import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -16,15 +16,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private DepartmentRepository departmentRepository;
+    private DepartmentDAO departmentDAO;
 
     @Override
-    public List<Department> findAllDepartments() {
-        return (List<Department>) departmentRepository.findAll();
+    public Collection<Department> findAllDepartments() {
+        return departmentDAO.getAll();
     }
 
     @Override
     public Optional<Department> findById(Integer id) {
-        return departmentRepository.findById(id);
+        return departmentDAO.getById(id);
     }
 }

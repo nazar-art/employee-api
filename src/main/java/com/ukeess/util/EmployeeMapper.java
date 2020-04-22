@@ -1,9 +1,10 @@
 package com.ukeess.util;
 
-import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
+import com.ukeess.model.dto.EmployeeDTO;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,30 +12,30 @@ import java.util.stream.Collectors;
 /**
  * @author Nazar Lelyak.
  */
+@Slf4j
 @UtilityClass
 public class EmployeeMapper {
 
     public EmployeeDTO mapToDTO(Employee employee) {
-        Department empDepartment = employee.getDepartment();
+        Department empDp = employee.getDepartment();
         return EmployeeDTO.builder()
                 .id(employee.getId())
                 .name(employee.getName())
                 .active(employee.getActive())
-                .departmentId(empDepartment.getId())
-                .departmentName(empDepartment.getName())
+                .departmentId(empDp.getId())
+                .departmentName(empDp.getName())
                 .build();
     }
 
     public Employee mapToEmployee(EmployeeDTO dto) {
-        Department dep = Department.builder()
-                .id(dto.getDepartmentId())
-                .name(dto.getDepartmentName())
-                .build();
         return Employee.builder()
                 .id(dto.getId())
                 .name(dto.getName())
                 .active(dto.getActive())
-                .department(dep)
+                .department(Department.builder()
+                        .id(dto.getDepartmentId())
+                        .name(dto.getDepartmentName())
+                        .build())
                 .build();
     }
 
