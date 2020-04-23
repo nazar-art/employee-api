@@ -48,3 +48,5 @@ INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('Pomfrey', true, 3);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('The Bloody Baron', true, 2);
+INSERT INTO tblEmployees (empName, empActive, emp_dpid)
+VALUES ('Nearly Headless Nick', true, 2);

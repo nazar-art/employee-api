@@ -20,7 +20,7 @@ public class Employee {
     private Integer id;
 
     @NotEmpty
-    @Size(min = 2, max = 20)
+    @Size(min = 2, max = 30)
     private String name;
 
     private Boolean active;

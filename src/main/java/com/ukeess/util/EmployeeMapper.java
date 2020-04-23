@@ -4,15 +4,10 @@ import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.model.dto.EmployeeDTO;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Nazar Lelyak.
  */
-@Slf4j
 @UtilityClass
 public class EmployeeMapper {
 
@@ -37,11 +32,5 @@ public class EmployeeMapper {
                         .name(dto.getDepartmentName())
                         .build())
                 .build();
-    }
-
-    public List<EmployeeDTO> mapToDtoList(List<Employee> employees) {
-        return employees.stream()
-                .map(EmployeeMapper::mapToDTO)
-                .collect(Collectors.toList());
     }
 }

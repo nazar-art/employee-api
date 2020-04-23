@@ -1,23 +1,25 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.BaseDAO;
+import com.ukeess.dao.GenericDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SQLQueries;
+import com.ukeess.model.constant.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
  * @author Nazar Lelyak.
  */
 @Repository
-public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Department> {
+public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Department> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
@@ -36,7 +38,7 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseD
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate().queryForObject(
-                            SQLQueries.DEPARTMENT_SELECT_BY_ID,
+                            SQLQuery.DEPARTMENT_SELECT_BY_ID,
                             getIdParameterSource(id),
                             getEntityRowMapper())
             );
@@ -45,13 +47,15 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseD
     }
 
     @Override
-    public Collection<Department> getAll() {
-        return getNamedParameterJdbcTemplate().query(SQLQueries.DEPARTMENT_SELECT_ALL, getEntityRowMapper());
+    public Page<Department> getAll(Pageable pageable) {
+        return new PageImpl<>(getNamedParameterJdbcTemplate()
+                .query(SQLQuery.DEPARTMENT_SELECT_ALL, getEntityRowMapper())
+        );
     }
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(SQLQueries.DEPARTMENT_TOTAL_COUNT_BY_ID,
+                .queryForObject(SQLQuery.DEPARTMENT_TOTAL_COUNT_BY_ID,
                         getIdParameterSource(id),
                         Integer.class) > 0;
     }

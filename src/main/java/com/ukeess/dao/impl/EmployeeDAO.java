@@ -1,11 +1,14 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.BaseDAO;
+import com.ukeess.dao.GenericDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SQLQueries;
+import com.ukeess.model.constant.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,14 +25,14 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Repository
-public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Employee> {
+public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Employee> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
         setJdbcTemplate(jdbcTemplate);
     }
 
-    private RowMapper<Employee> getEntityRowMapper() {
+    private RowMapper<Employee> getEmployeeRowMapper() {
         return (rs, rowNum) -> {
             Department department = Department.builder()
                     .id(rs.getInt("dpID"))
@@ -56,6 +59,11 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
                 "departmentId", emp.getDepartment().getId());
     }
 
+    private boolean exists(int id) {
+        return getNamedParameterJdbcTemplate()
+                .queryForObject(SQLQuery.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
+    }
+
     @Override
     public Employee save(Employee employee) {
         if (employee.getId() == null) {
@@ -70,7 +78,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         getNamedParameterJdbcTemplate().update(
-                SQLQueries.EMPLOYEE_INSERT,
+                SQLQuery.EMPLOYEE_INSERT,
                 new MapSqlParameterSource(getParameterSourceMap(employee, false)),
                 keyHolder);
 
@@ -80,7 +88,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     private void update(Employee employee) {
         getNamedParameterJdbcTemplate().update(
-                SQLQueries.EMPLOYEE_UPDATE,
+                SQLQuery.EMPLOYEE_UPDATE,
                 getParameterSourceMap(employee, true)
         );
     }
@@ -90,30 +98,43 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate()
-                            .queryForObject(SQLQueries.EMPLOYEE_SELECT_BY_ID,
+                            .queryForObject(SQLQuery.EMPLOYEE_SELECT_BY_ID,
                                     getIdParameterSource(id),
-                                    getEntityRowMapper())
+                                    getEmployeeRowMapper())
             );
         }
         throw new EntityNotFoundException(id);
     }
 
     @Override
-    public List<Employee> getAll() {
-        return getNamedParameterJdbcTemplate().query(SQLQueries.EMPLOYEE_SELECT_ALL, getEntityRowMapper());
+    public void deleteById(int id) {
+        getNamedParameterJdbcTemplate().update(SQLQuery.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
     }
 
     @Override
-    public void deleteById(int id) {
-        getNamedParameterJdbcTemplate().update(SQLQueries.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
+    public Page<Employee> getAll(Pageable pageable) {
+        return getEmployeesPage("", SQLQuery.EMPLOYEE_SELECT_ALL_PAGEABLE, pageable);
     }
 
-    public List<Employee> searchByNameStartWith(String name) {
-        return getJdbcTemplate().query(SQLQueries.EMPLOYEES_NAME_STARTS_WITH, new String[]{name + "%"}, getEntityRowMapper());
+    public Page<Employee> findAllEmployeesWithNameStartsWith(String nameSnippet, Pageable pageable) {
+        return getEmployeesPage(nameSnippet, SQLQuery.EMPLOYEES_NAME_STARTS_WITH_PAGEABLE, pageable);
     }
 
-    private boolean exists(int id) {
-        return getNamedParameterJdbcTemplate()
-                .queryForObject(SQLQueries.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
+
+    private Page<Employee> getEmployeesPage(String nameSnippet, String query, Pageable pageable) {
+
+        String[] args = (nameSnippet.isEmpty()) ? new String[]{} : new String[]{nameSnippet + "%"};
+
+        List<Employee> employees = getJdbcTemplate()
+                .query(String.format(query,
+                        pageable.getPageSize(), pageable.getOffset()),
+                        args,
+                        getEmployeeRowMapper());
+
+        return new PageImpl<>(employees, pageable, getTotalRows());
+    }
+
+    private long getTotalRows() {
+        return getJdbcTemplate().queryForObject(SQLQuery.EMPLOYEES_TABLE_TOTAL_COUNT, long.class);
     }
 }

@@ -1,19 +1,20 @@
 package com.ukeess.dao;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-import java.util.Collection;
 import java.util.Optional;
 
-public interface BaseDAO<ENTITY> {
+public interface GenericDAO<E> {
 
-    ENTITY save(ENTITY entity);
+    E save(E entity);
 
-    Optional<ENTITY> getById(int id);
+    Optional<E> getById(int id);
 
-    Collection<ENTITY> getAll();
+    Page<E> getAll(Pageable pageable);
 
     void deleteById(int id);
 

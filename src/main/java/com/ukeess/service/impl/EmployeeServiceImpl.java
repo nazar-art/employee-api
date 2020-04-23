@@ -6,14 +6,18 @@ import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
  * @author Nazar Lelyak.
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -21,27 +25,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDAO employeeDAO;
 
     @Override
-    public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        Employee empl = EmployeeMapper.mapToEmployee(employeeDTO);
-        return EmployeeMapper.mapToDTO(employeeDAO.save(empl));
+    public EmployeeDTO create(EmployeeDTO dto) {
+        return postLoad(employeeDAO.save(preSave(dto)));
     }
 
     @Override
-    public List<EmployeeDTO> findAll() {
-        return EmployeeMapper.mapToDtoList(employeeDAO.getAll());
+    public Page<EmployeeDTO> findAll(Pageable pageable) {
+        return employeeDAO.getAll(pageable)
+                .map(this::postLoad);
     }
 
     @Override
     public Optional<EmployeeDTO> findById(Integer id) {
         return employeeDAO.getById(id)
-                .map(EmployeeMapper::mapToDTO);
+                .map(this::postLoad);
     }
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-        return EmployeeMapper.mapToDTO(
-                employeeDAO.save(EmployeeMapper.mapToEmployee(dto))
-        );
+        return postLoad(employeeDAO.save(preSave(dto)));
     }
 
     @Override
@@ -50,8 +52,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> searchByNameStartsWith(String name) {
-        return EmployeeMapper.mapToDtoList(employeeDAO.searchByNameStartWith(name));
+    public Page<EmployeeDTO> searchByNameStartsWithPageable(String nameSnippet, Pageable pageable) {
+        Assert.hasText(nameSnippet, "name of the employee can't be empty");
+        return employeeDAO.findAllEmployeesWithNameStartsWith(nameSnippet, pageable)
+                .map(this::postLoad);
     }
 
+    private Employee preSave(EmployeeDTO dto) {
+        return EmployeeMapper.mapToEmployee(dto);
+    }
+
+    private EmployeeDTO postLoad(Employee entity) {
+        return EmployeeMapper.mapToDTO(entity);
+    }
 }
