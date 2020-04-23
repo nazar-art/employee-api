@@ -1,6 +1,6 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.GenericDAO;
+import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.model.constant.SQLQuery;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Repository
-public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Department> {
+public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Department> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {

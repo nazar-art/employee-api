@@ -6,7 +6,6 @@ import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.Optional;
 /**
  * @author Nazar Lelyak.
  */
-@Slf4j
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {

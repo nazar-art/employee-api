@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import java.util.Optional;
 
-public interface GenericDAO<E> {
+public interface BaseDAO<E> {
 
     E save(E entity);
 

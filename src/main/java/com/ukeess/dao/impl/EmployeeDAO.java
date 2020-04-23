@@ -1,6 +1,6 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.GenericDAO;
+import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
@@ -25,7 +25,7 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Repository
-public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Employee> {
+public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Employee> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
