@@ -14,8 +14,6 @@ Swagger UI available:
 
     http://localhost:8080/api/swagger-ui.html  
     
-Also, you can try test API there as well instead of Postman.    
-
 ## Step 3
 
 Spring Security is configured. So you need to authenticate first to 
