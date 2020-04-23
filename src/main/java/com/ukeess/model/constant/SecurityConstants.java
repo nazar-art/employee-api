@@ -8,6 +8,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SecurityConstants {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String TOKEN_BEARER_PREFIX = "Bearer ";
+    public final String AUTHORIZATION_HEADER = "Authorization";
+    public final String TOKEN_BEARER_PREFIX = "Bearer ";
 }

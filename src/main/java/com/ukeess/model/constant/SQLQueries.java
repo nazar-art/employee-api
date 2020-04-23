@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
  * @author Nazar Lelyak.
  */
 @UtilityClass
-public class SQLStatements {
+public class SQLQueries {
 
     /**
      * tblDepartments
@@ -39,8 +39,13 @@ public class SQLStatements {
             "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
             "WHERE empID=:id";
 
-    public final String EMPLOYEE_NAME_STARTS_WITH = "SELECT empID, empName, empActive, dpID, dpName " +
-            "FROM (SELECT empID, empName, empActive, emp_dpID FROM tblEmployees WHERE empName LIKE ?) emplData " +
-            "LEFT OUTER JOIN tblDepartments ON emp_dpID = dpID " +
-            "ORDER BY empID";
+//    public final String EMPLOYEES_NAME_STARTS_WITH = "SELECT empID, empName, empActive, dpID, dpName " +
+//            "FROM (SELECT empID, empName, empActive, emp_dpID FROM tblEmployees WHERE empName LIKE ?) emplData " +
+//            "LEFT OUTER JOIN tblDepartments ON emp_dpID = dpID " +
+//            "ORDER BY empID";
+    public final String EMPLOYEES_NAME_STARTS_WITH = "SELECT * " +
+                                                     "FROM tblEmployees " +
+                                                     "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
+                                                     "WHERE empName LIKE ?";
+    
 }

@@ -1,8 +1,9 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.GenericDAO;
+import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.exception.EntityNotFoundException;
+import com.ukeess.model.constant.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,15 +13,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.Optional;
 
-import static com.ukeess.model.constant.SQLStatements.DEPARTMENT_SELECT_ALL;
-import static com.ukeess.model.constant.SQLStatements.DEPARTMENT_SELECT_BY_ID;
-import static com.ukeess.model.constant.SQLStatements.DEPARTMENT_TOTAL_COUNT_BY_ID;
-
 /**
  * @author Nazar Lelyak.
  */
 @Repository
-public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Department> {
+public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Department> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
@@ -39,7 +36,7 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements Gener
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate().queryForObject(
-                            DEPARTMENT_SELECT_BY_ID,
+                            SQLQueries.DEPARTMENT_SELECT_BY_ID,
                             getIdParameterSource(id),
                             getEntityRowMapper())
             );
@@ -49,12 +46,12 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements Gener
 
     @Override
     public Collection<Department> getAll() {
-        return getNamedParameterJdbcTemplate().query(DEPARTMENT_SELECT_ALL, getEntityRowMapper());
+        return getNamedParameterJdbcTemplate().query(SQLQueries.DEPARTMENT_SELECT_ALL, getEntityRowMapper());
     }
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(DEPARTMENT_TOTAL_COUNT_BY_ID,
+                .queryForObject(SQLQueries.DEPARTMENT_TOTAL_COUNT_BY_ID,
                         getIdParameterSource(id),
                         Integer.class) > 0;
     }

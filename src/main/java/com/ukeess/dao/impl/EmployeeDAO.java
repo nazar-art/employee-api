@@ -1,9 +1,10 @@
 package com.ukeess.dao.impl;
 
-import com.ukeess.dao.GenericDAO;
+import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
+import com.ukeess.model.constant.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,19 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_DELETE_BY_ID;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_INSERT;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_NAME_STARTS_WITH;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_SELECT_ALL;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_SELECT_BY_ID;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_TOTAL_COUNT_BY_ID;
-import static com.ukeess.model.constant.SQLStatements.EMPLOYEE_UPDATE;
-
 /**
  * @author Nazar Lelyak.
  */
 @Repository
-public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements GenericDAO<Employee> {
+public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Employee> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
@@ -51,8 +44,8 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements Generic
         };
     }
 
-    private Map<String, ?> getParameterSourceMap(Employee emp, boolean isUpdate) {
-        return isUpdate
+    private Map<String, ?> getParameterSourceMap(Employee emp, boolean ifUpdate) {
+        return ifUpdate
                 ? Map.of("name", emp.getName(),
                 "active", emp.getActive(),
                 "departmentId", emp.getDepartment().getId(),
@@ -77,7 +70,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements Generic
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         getNamedParameterJdbcTemplate().update(
-                EMPLOYEE_INSERT,
+                SQLQueries.EMPLOYEE_INSERT,
                 new MapSqlParameterSource(getParameterSourceMap(employee, false)),
                 keyHolder);
 
@@ -87,7 +80,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements Generic
 
     private void update(Employee employee) {
         getNamedParameterJdbcTemplate().update(
-                EMPLOYEE_UPDATE,
+                SQLQueries.EMPLOYEE_UPDATE,
                 getParameterSourceMap(employee, true)
         );
     }
@@ -97,7 +90,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements Generic
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate()
-                            .queryForObject(EMPLOYEE_SELECT_BY_ID,
+                            .queryForObject(SQLQueries.EMPLOYEE_SELECT_BY_ID,
                                     getIdParameterSource(id),
                                     getEntityRowMapper())
             );
@@ -107,20 +100,20 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements Generic
 
     @Override
     public List<Employee> getAll() {
-        return getNamedParameterJdbcTemplate().query(EMPLOYEE_SELECT_ALL, getEntityRowMapper());
+        return getNamedParameterJdbcTemplate().query(SQLQueries.EMPLOYEE_SELECT_ALL, getEntityRowMapper());
     }
 
     @Override
     public void deleteById(int id) {
-        getNamedParameterJdbcTemplate().update(EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
+        getNamedParameterJdbcTemplate().update(SQLQueries.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
     }
 
     public List<Employee> searchByNameStartWith(String name) {
-        return getJdbcTemplate().query(EMPLOYEE_NAME_STARTS_WITH, new String[]{name + "%"}, getEntityRowMapper());
+        return getJdbcTemplate().query(SQLQueries.EMPLOYEES_NAME_STARTS_WITH, new String[]{name + "%"}, getEntityRowMapper());
     }
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
+                .queryForObject(SQLQueries.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
     }
 }

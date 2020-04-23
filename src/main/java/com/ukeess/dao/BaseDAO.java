@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface GenericDAO<ENTITY> {
+public interface BaseDAO<ENTITY> {
 
     ENTITY save(ENTITY entity);
 
@@ -20,8 +20,4 @@ public interface GenericDAO<ENTITY> {
     default SqlParameterSource getIdParameterSource(int id) {
         return new MapSqlParameterSource("id", id);
     }
-
-//    int update(ENTITY entity);
-//    ENTITY create(ENTITY entity);
-//    int getTotalCount();
 }
