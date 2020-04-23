@@ -1,7 +1,8 @@
 # Employee API
 
 You need to **Java 11** first for running the application.
-If you need to install it have a look to [SdkMan](https://sdkman.io).
+
+If you have to install it first. Have a look to [SdkMan](https://sdkman.io).
 
 ## Step 1
 
@@ -9,36 +10,37 @@ Run application by `./mvnw spring-boot:run` command
 
 ## Step 2
 
-Spring Security is configured. So you need to authenticate first
+Swagger UI available:
 
-    POST http://localhost:8080/api/authenticate 
-    {
-        username: harry
-        password: potter
-    }
+    http://localhost:8080/api/swagger-ui.html  
     
-Example of call from terminal with [HTTP client](https://httpie.org/) 
+Also, you can try test API there as well instead of Postman.    
+
+## Step 3
+
+Spring Security is configured. So you need to authenticate first to 
+
+    http://localhost:8080/api/authenticate
+    
+With following credentials    
+
+    username: harry
+    password: potter
+    
+You could use [HTTP client](https://httpie.org/) for this as well 
 
     http :8080/api/authenticate username=harry password=potter
     
     HTTP/1.1 200 
-    Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA1OTAsImlhdCI6MTU4NzMyNDU5MH0.Epf0M-c6sQWWOBLQW3FIhJPffoWys7AjGuIrkH1MgQ0
-    Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-    Content-Type: application/json;charset=UTF-8
-    Date: Sun, 19 Apr 2020 19:29:50 GMT
-    Expires: 0
-    Pragma: no-cache
-    Transfer-Encoding: chunked
-    X-Content-Type-Options: nosniff
-    X-Frame-Options: DENY
-    X-XSS-Protection: 1; mode=block
+    Authorization: <token-value-here>
+    ...
     
     {
         "token": "<token-value-here>"
     }
     
 
-## Step 3
+## Step 4
 
 Any next request should contain that token at header
  
@@ -59,9 +61,10 @@ Any next request should contain that token at header
     
 ### Create new employee
 
-    http POST :8080/api/v1/employees Authorization:Bearer\ <token-value-here> name=Rabbit active=true departmentId=2 departmentName=Hufflepuff
+    http :8080/api/v1/employees Authorization:Bearer\ <token-value-here> name=Rabbit active=true departmentId=2 departmentName=Hufflepuff
     
     HTTP/1.1 201 
+    ...
     
     {
         "active": true, 
@@ -87,26 +90,46 @@ Any next request should contain that token at header
     
 ### Search for all employees which name starts with 'r' letter
 
-    http :8080/api/v1/employees/search?name=h Authorization:Bearer\ <token-value-here>
+    http :8080/api/v1/employees/search?name=r Authorization:Bearer\ <token-value-here>
     
     HTTP/1.1 200 
     
-    [
-        {
-            "active": true, 
-            "departmentId": 1, 
-            "departmentName": "Gryffindor", 
-            "id": 2, 
-            "name": "Ron"
+    {
+        "content": [
+            {
+                "active": false, 
+                "departmentId": 3, 
+                "departmentName": "Ravenclaw", 
+                "id": 6, 
+                "name": "Robert"
+            }
+        ], 
+        "empty": false, 
+        "first": false, 
+        "last": false, 
+        "number": 1, 
+        "numberOfElements": 1, 
+        "pageable": {
+            "offset": 1, 
+            "pageNumber": 1, 
+            "pageSize": 1, 
+            "paged": true, 
+            "sort": {
+                "empty": true, 
+                "sorted": false, 
+                "unsorted": true
+            }, 
+            "unpaged": false
         }, 
-        {
-            "active": false, 
-            "departmentId": 3, 
-            "departmentName": "Ravenclaw", 
-            "id": 6, 
-            "name": "Robert"
-        }
-    ]
+        "size": 1, 
+        "sort": {
+            "empty": true, 
+            "sorted": false, 
+            "unsorted": true
+        }, 
+        "totalElements": 18, 
+        "totalPages": 18
+    }
 
 ### Delete employee
 
@@ -123,12 +146,4 @@ Any next request should contain that token at header
     X-Frame-Options: DENY
     X-XSS-Protection: 1; mode=block
 
-    
----
-
-Swagger UI available:
-
-    http://localhost:8080/api/swagger-ui.html  
-    
-Also, you can try test API there as well instead of Postman.    
 
