@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
  * @author Nazar Lelyak.
  */
 @UtilityClass
-public class SQLQuery {
+public class SqlQueries {
 
     /**
      * tblDepartments

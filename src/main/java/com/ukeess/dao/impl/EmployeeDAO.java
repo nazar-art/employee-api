@@ -4,7 +4,7 @@ import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SQLQuery;
+import com.ukeess.model.constant.SqlQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -61,7 +61,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(SQLQuery.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
+                .queryForObject(SqlQueries.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         getNamedParameterJdbcTemplate().update(
-                SQLQuery.EMPLOYEE_INSERT,
+                SqlQueries.EMPLOYEE_INSERT,
                 new MapSqlParameterSource(getParameterSourceMap(employee, false)),
                 keyHolder);
 
@@ -88,7 +88,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     private void update(Employee employee) {
         getNamedParameterJdbcTemplate().update(
-                SQLQuery.EMPLOYEE_UPDATE,
+                SqlQueries.EMPLOYEE_UPDATE,
                 getParameterSourceMap(employee, true)
         );
     }
@@ -98,7 +98,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate()
-                            .queryForObject(SQLQuery.EMPLOYEE_SELECT_BY_ID,
+                            .queryForObject(SqlQueries.EMPLOYEE_SELECT_BY_ID,
                                     getIdParameterSource(id),
                                     getEmployeeRowMapper())
             );
@@ -108,16 +108,16 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     @Override
     public void deleteById(int id) {
-        getNamedParameterJdbcTemplate().update(SQLQuery.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
+        getNamedParameterJdbcTemplate().update(SqlQueries.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
     }
 
     @Override
     public Page<Employee> getAll(Pageable pageable) {
-        return getEmployeesPage("", SQLQuery.EMPLOYEE_SELECT_ALL_PAGEABLE, pageable);
+        return getEmployeesPage("", SqlQueries.EMPLOYEE_SELECT_ALL_PAGEABLE, pageable);
     }
 
     public Page<Employee> findAllEmployeesWithNameStartsWith(String nameSnippet, Pageable pageable) {
-        return getEmployeesPage(nameSnippet, SQLQuery.EMPLOYEES_NAME_STARTS_WITH_PAGEABLE, pageable);
+        return getEmployeesPage(nameSnippet, SqlQueries.EMPLOYEES_NAME_STARTS_WITH_PAGEABLE, pageable);
     }
 
 
@@ -135,6 +135,6 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
     }
 
     private long getTotalRows() {
-        return getJdbcTemplate().queryForObject(SQLQuery.EMPLOYEES_TABLE_TOTAL_COUNT, long.class);
+        return getJdbcTemplate().queryForObject(SqlQueries.EMPLOYEES_TABLE_TOTAL_COUNT, long.class);
     }
 }

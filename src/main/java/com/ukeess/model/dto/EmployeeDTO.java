@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Nazar Lelyak.
  */
@@ -12,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDTO {
+public class EmployeeDTO implements Serializable {
+    private static final long serialVersionUID = 2L;
+
     private Integer id;
     private String name;
     private Boolean active;

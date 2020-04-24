@@ -3,7 +3,7 @@ package com.ukeess.dao.impl;
 import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SQLQuery;
+import com.ukeess.model.constant.SqlQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,7 +38,7 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseD
         if (exists(id)) {
             return Optional.ofNullable(
                     getNamedParameterJdbcTemplate().queryForObject(
-                            SQLQuery.DEPARTMENT_SELECT_BY_ID,
+                            SqlQueries.DEPARTMENT_SELECT_BY_ID,
                             getIdParameterSource(id),
                             getEntityRowMapper())
             );
@@ -49,13 +49,13 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseD
     @Override
     public Page<Department> getAll(Pageable pageable) {
         return new PageImpl<>(getNamedParameterJdbcTemplate()
-                .query(SQLQuery.DEPARTMENT_SELECT_ALL, getEntityRowMapper())
+                .query(SqlQueries.DEPARTMENT_SELECT_ALL, getEntityRowMapper())
         );
     }
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(SQLQuery.DEPARTMENT_TOTAL_COUNT_BY_ID,
+                .queryForObject(SqlQueries.DEPARTMENT_TOTAL_COUNT_BY_ID,
                         getIdParameterSource(id),
                         Integer.class) > 0;
     }

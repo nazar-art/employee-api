@@ -1,8 +1,13 @@
 # Employee API
 
-You need to **Java 11** first for running the application.
+- You need the **Java 11** installed for running the application.
 
-If you have to install it first. Have a look to [SdkMan](https://sdkman.io).
+If you have to install it have a look at [SdkMan](https://sdkman.io).
+
+- MySql dump don't needed. Data samples are inserted at startup time.
+
+- you have to update datasource credentials at `application.yml`
+
 
 ## Step 1
 
@@ -16,7 +21,7 @@ Swagger UI available:
     
 ## Step 3
 
-Spring Security is configured. So you need to authenticate first to 
+Spring Security is configured. So you need to authenticate first 
 
     http://localhost:8080/api/authenticate
     
@@ -25,7 +30,7 @@ With following credentials
     username: harry
     password: potter
     
-You could use [HTTP client](https://httpie.org/) for this as well 
+You could use [HTTP client](https://httpie.org/) for all operation from console 
 
     http :8080/api/authenticate username=harry password=potter
     
@@ -131,17 +136,8 @@ Any next request should contain that token at header
 
 ### Delete employee
 
-    http DELETE :8080/api/v1/employees/19 Authorization:Bearer\ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXJyeSIsImV4cCI6MTU4NzgwNzg5MSwiaWF0IjoxNTg3NjM1MDkxfQ.BF6VIBJuiOtQ-1MN5baX0184l4TsCGAXuQRtY2_-ywk
+    http DELETE :8080/api/v1/employees/19 Authorization:Bearer\ <token-value-here>
     
     HTTP/1.1 204 
-    Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-    Connection: keep-alive
-    Date: Thu, 23 Apr 2020 10:32:13 GMT
-    Expires: 0
-    Keep-Alive: timeout=60
-    Pragma: no-cache
-    X-Content-Type-Options: nosniff
-    X-Frame-Options: DENY
-    X-XSS-Protection: 1; mode=block
-
+    ...
 
