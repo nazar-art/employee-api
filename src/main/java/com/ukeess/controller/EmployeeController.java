@@ -48,8 +48,8 @@ public class EmployeeController {
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
     public ResponseEntity findAllEmployees(
-            @RequestParam(value = "page", required = false, defaultValue = "2") int pageNumber,
-            @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
+            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
 
         return ResponseEntity.ok(employeeService.findAll(PageRequest.of(pageNumber, pageSize)));
     }
@@ -92,12 +92,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class, responseContainer = "List",
+    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
             value = "Search for all Employees which name starts with provided name snippet")
     public Page<EmployeeDTO> searchEmployeesByNameStartsWith(
 
-            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
-            @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
 
             @ApiParam(value = "Name snippet for the employee you looking for", required = true)
             @RequestParam(value = "name") String nameSnippet) {
