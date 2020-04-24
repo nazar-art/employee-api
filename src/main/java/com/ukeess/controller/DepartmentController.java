@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /**
  * @author Nazar Lelyak.
@@ -26,9 +28,9 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping
-    @ApiOperation(value = "Find All Departments", responseContainer = "List", response = Department.class)
-    public ResponseEntity<Page<Department>> findAllDepartments(
-            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+    @ApiOperation(value = "Find All Departments", response = Department.class)
+    public ResponseEntity<List<Department>> findAllDepartments(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
 
         return ResponseEntity.ok(
