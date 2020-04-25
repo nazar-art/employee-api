@@ -11,7 +11,7 @@ public class SqlQueries {
     /**
      * tblDepartments
      */
-    public final String DEPARTMENT_SELECT_ALL = "SELECT * FROM tblDepartments";
+    public final String DEPARTMENT_SELECT_ALL = "SELECT * FROM tblDepartments ORDER BY dpID";
     public final String DEPARTMENT_SELECT_BY_ID = "SELECT * FROM tblDepartments WHERE dpID=:id";
     public final String DEPARTMENT_TOTAL_COUNT_BY_ID = "SELECT COUNT(*) FROM tblDepartments WHERE dpID=:id";
 

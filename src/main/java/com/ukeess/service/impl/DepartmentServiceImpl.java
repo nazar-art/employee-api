@@ -4,12 +4,10 @@ import com.ukeess.dao.impl.DepartmentDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.service.DepartmentService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Nazar Lelyak.
@@ -21,9 +19,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentDAO departmentDAO;
 
     @Override
-    public List<Department> findAllDepartments(Pageable pageable) {
-        return departmentDAO.getAll(pageable).stream()
-                .collect(Collectors.toList());
+    public List<Department> findAllDepartments() {
+        return departmentDAO.getAll();
     }
 
     @Override
