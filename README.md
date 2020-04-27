@@ -1,93 +1,143 @@
 # Employee API
 
+- You need the **Java 11** installed for running the application.
+
+If you have to install it have a look at [SdkMan](https://sdkman.io).
+
+- MySql dump don't needed. DB and data samples are created at startup time.
+
+- you have to update datasource credentials at `application.yml`
+
+
 ## Step 1
 
 Run application by `./mvnw spring-boot:run` command
 
 ## Step 2
 
-Spring Security is configured. So you need to authenticate first
+Swagger UI available:
 
-    POST http://localhost:8080/api/authenticate 
-    {
-        username: harry
-        password: potter
-    }
+    http://localhost:8080/api/swagger-ui.html  
     
-Example of call from terminal with [HTTP client](https://httpie.org/) 
+## Step 3
+
+Spring Security is configured. So you need to authenticate first 
+
+    http://localhost:8080/api/authenticate
+    
+With following credentials    
+
+    username: harry
+    password: potter
+    
+You could use [HTTP client](https://httpie.org/) for all operation from console 
 
     http :8080/api/authenticate username=harry password=potter
     
     HTTP/1.1 200 
-    Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1a2Vlc3MiLCJleHAiOjE1ODczNjA1OTAsImlhdCI6MTU4NzMyNDU5MH0.Epf0M-c6sQWWOBLQW3FIhJPffoWys7AjGuIrkH1MgQ0
-    Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-    Content-Type: application/json;charset=UTF-8
-    Date: Sun, 19 Apr 2020 19:29:50 GMT
-    Expires: 0
-    Pragma: no-cache
-    Transfer-Encoding: chunked
-    X-Content-Type-Options: nosniff
-    X-Frame-Options: DENY
-    X-XSS-Protection: 1; mode=block
+    Authorization: <token-value-here>
+    ...
     
     {
         "token": "<token-value-here>"
     }
     
 
-## Step 3
+## Step 4
 
 Any next request should contain that token at header
+ 
+### Find one employee
     
     http :8080/api/v1/employees/4 Authorization:Bearer\ <token-value-here>
     
     HTTP/1.1 200 
-    Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-    Content-Type: application/json;charset=UTF-8
-    Date: Sun, 19 Apr 2020 19:41:57 GMT
-    Expires: 0
-    Pragma: no-cache
-    Transfer-Encoding: chunked
-    X-Content-Type-Options: nosniff
-    X-Frame-Options: DENY
-    X-XSS-Protection: 1; mode=block
+    ...
     
     {
         "active": true, 
-        "department": {
-            "id": 1, 
-            "name": "Gryffindor"
-        }, 
+        "departmentId": 1, 
+        "departmentName": "Gryffindor", 
         "id": 4, 
         "name": "Hagrid"
     }
-
-  
----
-
-Swagger UI available:
-
-    http://localhost:8080/api/swagger-ui.html  
     
-Also, you can try test API there as well instead of Postman.    
+### Create new employee
 
----
+    http :8080/api/v1/employees Authorization:Bearer\ <token-value-here> name=Rabbit active=true departmentId=2 departmentName=Hufflepuff
+    
+    HTTP/1.1 201 
+    ...
+    
+    {
+        "active": true, 
+        "departmentId": 2, 
+        "departmentName": "Hufflepuff", 
+        "id": 19, 
+        "name": "Rabbit"
+    }
+    
+### Update newly created employee
 
-### TODO LIST:
+    http PUT :8080/api/v1/employees/19 Authorization:Bearer\ <token-value-here> id=19 name=JoJo\ Rabbit active=false departmentId=1 departmentName=Gryffindor
+    
+    HTTP/1.1 200 
+    
+    {
+        "active": false, 
+        "departmentId": 1, 
+        "departmentName": "Gryffindor", 
+        "id": 19, 
+        "name": "JoJo Rabbit"
+    }
+    
+### Search for all employees which name starts with 'r' letter
 
-#### Backend task
+    http :8080/api/v1/employees/search?name=r Authorization:Bearer\ <token-value-here>
+    
+    HTTP/1.1 200 
+    
+    {
+        "content": [
+            {
+                "active": false, 
+                "departmentId": 3, 
+                "departmentName": "Ravenclaw", 
+                "id": 6, 
+                "name": "Robert"
+            }
+        ], 
+        "empty": false, 
+        "first": false, 
+        "last": false, 
+        "number": 1, 
+        "numberOfElements": 1, 
+        "pageable": {
+            "offset": 1, 
+            "pageNumber": 1, 
+            "pageSize": 1, 
+            "paged": true, 
+            "sort": {
+                "empty": true, 
+                "sorted": false, 
+                "unsorted": true
+            }, 
+            "unpaged": false
+        }, 
+        "size": 1, 
+        "sort": {
+            "empty": true, 
+            "sorted": false, 
+            "unsorted": true
+        }, 
+        "totalElements": 18, 
+        "totalPages": 18
+    }
 
-- [x] Add Swagger annotations
-- [x] Add jwt security to the application
-- [x] Replace response from controller to DTO object
-- [ ] Replace JPA framework with custom implementation
+### Delete employee
 
-#### UI tasks
+    http DELETE :8080/api/v1/employees/19 Authorization:Bearer\ <token-value-here>
+    
+    HTTP/1.1 204 
+    ...
 
-- [ ] Create Angular Client with One page + Ajax 
-- [ ] implement Ajax for UI
-- [ ] Login for UI 
-
-#### Final step
-- [ ] describe how to run everything at readme file
-- [ ] zip project with UI

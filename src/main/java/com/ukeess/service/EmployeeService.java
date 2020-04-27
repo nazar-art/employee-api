@@ -1,10 +1,9 @@
 package com.ukeess.service;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.model.dto.EmployeeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
@@ -19,5 +18,5 @@ public interface EmployeeService {
 
     void deleteById(Integer id);
 
-    List<EmployeeDTO> searchByNameStartsWith(String name);
+    Page<EmployeeDTO> searchByNameStartsWithPageable(String nameSnippet, Pageable pageable);
 }

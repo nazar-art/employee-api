@@ -17,7 +17,8 @@ import java.util.function.Function;
 @Service
 public class TokenProvider {
 
-    private final String SECRET_KEY = "my-secret-token";
+    private static final String SECRET_KEY = "my-secret-token";
+    private static final int TOKEN_EXPIRATION_HOURS = 168; // 7 days
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
@@ -48,7 +49,7 @@ public class TokenProvider {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours is expiration date
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * TOKEN_EXPIRATION_HOURS))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
