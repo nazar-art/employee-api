@@ -28,14 +28,10 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping
-    @ApiOperation(value = "Find All Departments", response = Department.class)
-    public ResponseEntity<List<Department>> findAllDepartments(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
+    @ApiOperation(value = "Find All Departments", response = Department.class, responseContainer = "List")
+    public ResponseEntity<List<Department>> findAllDepartments() {
 
-        return ResponseEntity.ok(
-                departmentService.findAllDepartments(PageRequest.of(pageNumber, pageSize))
-        );
+        return ResponseEntity.ok(departmentService.findAllDepartments());
     }
 
     @GetMapping("/{id}")
