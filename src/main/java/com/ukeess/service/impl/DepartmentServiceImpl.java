@@ -21,9 +21,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentDAO departmentDAO;
 
     @Override
-    public List<Department> findAllDepartments(Pageable pageable) {
-        return departmentDAO.getAll(pageable).stream()
-                .collect(Collectors.toList());
+    public List<Department> findAllDepartments() {
+        return departmentDAO.getAll();
     }
 
     @Override

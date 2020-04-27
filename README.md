@@ -4,7 +4,7 @@
 
 If you have to install it have a look at [SdkMan](https://sdkman.io).
 
-- MySql dump don't needed. Data samples are inserted at startup time.
+- MySql dump don't needed. DB and data samples are created at startup time.
 
 - you have to update datasource credentials at `application.yml`
 

@@ -37,7 +37,7 @@ public class EmployeeController {
     @ApiOperation(value = "Create new Employee",
             notes = "Provide an Employee to be added in a body",
             response = EmployeeDTO.class)
-    public ResponseEntity createEmployee(
+    public ResponseEntity<EmployeeDTO> createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid EmployeeDTO employeeDTO) {
 
@@ -47,7 +47,7 @@ public class EmployeeController {
 
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
-    public ResponseEntity findAllEmployees(
+    public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
             @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
 
@@ -57,7 +57,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     @ApiOperation(value = "Find Employee by ID", response = EmployeeDTO.class,
             notes = "Provide an id to look up specific employee")
-    public ResponseEntity findEmployeeById(
+    public ResponseEntity<EmployeeDTO> findEmployeeById(
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
             @PathVariable int id) {
 
@@ -69,7 +69,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @ApiOperation(value = "Update an Employee", response = EmployeeDTO.class,
             notes = "Provide an id of employee for update, and new representation of employee")
-    public ResponseEntity updateEmployee(
+    public ResponseEntity<EmployeeDTO> updateEmployee(
 
             @ApiParam(value = "ID value for the employee you need to update", required = true)
             @PathVariable int id,
@@ -92,6 +92,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
+    @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
             value = "Search for all Employees which name starts with provided name snippet")
     public Page<EmployeeDTO> searchEmployeesByNameStartsWith(
@@ -99,7 +100,8 @@ public class EmployeeController {
             @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
 
-            @ApiParam(value = "Name snippet for the employee you looking for", required = true)
+            @ApiParam(value = "Employee's name snippet to get all employees which name starts with this snippet",
+                    required = true)
             @RequestParam(value = "name") String nameSnippet) {
 
         return employeeService.searchByNameStartsWithPageable(nameSnippet, PageRequest.of(pageNumber, pageSize));
