@@ -16,8 +16,6 @@ import java.util.List;
 /**
  * @author Nazar Lelyak.
  */
-//@CrossOrigin(origins = "http://localhost:4200",
-//        methods = {RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/departments")
