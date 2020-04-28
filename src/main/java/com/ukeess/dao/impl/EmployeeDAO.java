@@ -3,8 +3,6 @@ package com.ukeess.dao.impl;
 import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
-import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SqlQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -61,7 +59,8 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(SqlQueries.EMPLOYEE_TOTAL_COUNT_BY_ID, getIdParameterSource(id), Integer.class) > 0;
+                .queryForObject("SELECT COUNT(*) FROM tblEmployees WHERE empID=:id",
+                        getIdParameterSource(id), Integer.class) > 0;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         getNamedParameterJdbcTemplate().update(
-                SqlQueries.EMPLOYEE_INSERT,
+                "INSERT INTO tblEmployees (empName, empActive, emp_dpID) VALUES(:name, :active, :departmentId)",
                 new MapSqlParameterSource(getParameterSourceMap(employee, false)),
                 keyHolder);
 
@@ -88,36 +87,51 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     private void update(Employee employee) {
         getNamedParameterJdbcTemplate().update(
-                SqlQueries.EMPLOYEE_UPDATE,
+                "UPDATE tblEmployees " +
+                        "SET empName = :name, empActive = :active, emp_dpID = :departmentId " +
+                        "WHERE empID = :id",
                 getParameterSourceMap(employee, true)
         );
     }
 
     @Override
     public Optional<Employee> getById(int id) {
-        if (exists(id)) {
-            return Optional.ofNullable(
-                    getNamedParameterJdbcTemplate()
-                            .queryForObject(SqlQueries.EMPLOYEE_SELECT_BY_ID,
-                                    getIdParameterSource(id),
-                                    getEmployeeRowMapper())
-            );
-        }
-        throw new EntityNotFoundException(id);
+        return Optional.ofNullable(
+                getNamedParameterJdbcTemplate()
+                        .queryForObject("SELECT empID, empName, empActive, dpID, dpName " +
+                                        "FROM tblEmployees " +
+                                        "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
+                                        "WHERE empID=:id",
+                                getIdParameterSource(id),
+                                getEmployeeRowMapper())
+        );
     }
 
     @Override
     public void deleteById(int id) {
-        getNamedParameterJdbcTemplate().update(SqlQueries.EMPLOYEE_DELETE_BY_ID, getIdParameterSource(id));
+        getNamedParameterJdbcTemplate().update("DELETE FROM tblEmployees WHERE empID=:id", getIdParameterSource(id));
     }
 
     @Override
     public Page<Employee> getAll(Pageable pageable) {
-        return getEmployeesPage("", SqlQueries.EMPLOYEE_SELECT_ALL_PAGEABLE, pageable);
+        return getEmployeesPage("",
+                "SELECT empID, empName, empActive, dpID, dpName " +
+                        "FROM tblEmployees, tblDepartments " +
+                        "WHERE empID=dpID " +
+                        "ORDER BY empID " +
+                        "LIMIT %s OFFSET %s",
+                pageable);
     }
 
     public Page<Employee> findAllEmployeesWithNameStartsWith(String nameSnippet, Pageable pageable) {
-        return getEmployeesPage(nameSnippet, SqlQueries.EMPLOYEES_NAME_STARTS_WITH_PAGEABLE, pageable);
+        return getEmployeesPage(nameSnippet,
+                "SELECT empID, empName, empActive, dpID, dpName " +
+                        "FROM tblEmployees " +
+                        "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
+                        "WHERE empName LIKE ? " +
+                        "ORDER BY empID " +
+                        "LIMIT %s OFFSET %s",
+                pageable);
     }
 
 
@@ -135,6 +149,6 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
     }
 
     private long getTotalRows() {
-        return getJdbcTemplate().queryForObject(SqlQueries.EMPLOYEES_TABLE_TOTAL_COUNT, long.class);
+        return getJdbcTemplate().queryForObject("select count(*) from tblEmployees", long.class);
     }
 }

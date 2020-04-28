@@ -2,8 +2,6 @@ package com.ukeess.dao.impl;
 
 import com.ukeess.dao.BaseDAO;
 import com.ukeess.entity.Department;
-import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.constant.SqlQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,25 +33,22 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements BaseD
 
     @Override
     public Optional<Department> getById(int id) {
-        if (exists(id)) {
-            return Optional.ofNullable(
-                    getNamedParameterJdbcTemplate().queryForObject(
-                            SqlQueries.DEPARTMENT_SELECT_BY_ID,
-                            getIdParameterSource(id),
-                            getEntityRowMapper())
-            );
-        }
-        throw new EntityNotFoundException(id);
+        return Optional.ofNullable(
+                getNamedParameterJdbcTemplate().queryForObject(
+                        "SELECT dpID, dpName FROM tblDepartments WHERE dpID=:id",
+                        getIdParameterSource(id),
+                        getEntityRowMapper())
+        );
     }
 
     public List<Department> getAll() {
         return getNamedParameterJdbcTemplate()
-                .query(SqlQueries.DEPARTMENT_SELECT_ALL, getEntityRowMapper());
+                .query("SELECT dpID, dpName FROM tblDepartments", getEntityRowMapper());
     }
 
     private boolean exists(int id) {
         return getNamedParameterJdbcTemplate()
-                .queryForObject(SqlQueries.DEPARTMENT_TOTAL_COUNT_BY_ID,
+                .queryForObject("SELECT COUNT(*) FROM tblDepartments WHERE dpID=:id",
                         getIdParameterSource(id),
                         Integer.class) > 0;
     }
