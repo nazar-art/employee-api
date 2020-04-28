@@ -1,12 +1,11 @@
-package com.ukeess.entity;
+package com.ukeess.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author Nazar Lelyak.
@@ -15,14 +14,13 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee {
+public class EmployeeDTO implements Serializable {
+    private static final long serialVersionUID = 2L;
 
     private Integer id;
-
-    @NotEmpty
-    @Size(min = 2, max = 30)
     private String name;
-
     private Boolean active;
-    private Department department;
+
+    private Integer departmentId;
+    private String departmentName;
 }

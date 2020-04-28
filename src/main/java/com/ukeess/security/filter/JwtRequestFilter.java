@@ -1,8 +1,8 @@
 package com.ukeess.security.filter;
 
+import com.ukeess.model.constant.SecurityConstants;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceMock;
-import com.ukeess.security.constant.SecurityConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

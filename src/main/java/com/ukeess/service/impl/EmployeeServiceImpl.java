@@ -1,17 +1,16 @@
 package com.ukeess.service.impl;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.dao.impl.EmployeeDAO;
 import com.ukeess.entity.Employee;
-import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.repository.EmployeeRepository;
+import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,43 +20,47 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private EmployeeDAO employeeDAO;
 
     @Override
-    public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        Employee empl = EmployeeMapper.mapToEmployee(employeeDTO);
-        return EmployeeMapper.mapToDTO(employeeRepository.save(empl));
+    public EmployeeDTO create(EmployeeDTO dto) {
+        return postLoad(employeeDAO.save(preSave(dto)));
     }
 
     @Override
     public Page<EmployeeDTO> findAll(Pageable pageable) {
-        return employeeRepository.findAll(pageable)
-                .map(EmployeeMapper::mapToDTO);
+        return employeeDAO.getAll(pageable)
+                .map(this::postLoad);
     }
 
     @Override
     public Optional<EmployeeDTO> findById(Integer id) {
-        return employeeRepository.findById(id)
-                .map(EmployeeMapper::mapToDTO);
+        return employeeDAO.getById(id)
+                .map(this::postLoad);
     }
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-        if (employeeRepository.existsById(id)) {
-            Employee employee = EmployeeMapper.mapToEmployee(dto);
-            return EmployeeMapper.mapToDTO(employeeRepository.save(employee));
-        }
-        throw new EntityNotFoundException(id);
+        return postLoad(employeeDAO.save(preSave(dto)));
     }
 
     @Override
     public void deleteById(Integer id) {
-        employeeRepository.deleteById(id);
+        employeeDAO.deleteById(id);
     }
 
     @Override
-    public List<EmployeeDTO> searchByNameStartsWith(String name) {
-        return EmployeeMapper.mapToDtoList(employeeRepository.findAllByNameStartingWith(name));
+    public Page<EmployeeDTO> searchByNameStartsWithPageable(String nameSnippet, Pageable pageable) {
+        Assert.hasText(nameSnippet, "name of the employee can't be empty");
+        return employeeDAO.findAllEmployeesWithNameStartsWith(nameSnippet, pageable)
+                .map(this::postLoad);
     }
 
+    private Employee preSave(EmployeeDTO dto) {
+        return EmployeeMapper.mapToEmployee(dto);
+    }
+
+    private EmployeeDTO postLoad(Employee entity) {
+        return EmployeeMapper.mapToDTO(entity);
+    }
 }

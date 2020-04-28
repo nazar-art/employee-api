@@ -1,4 +1,4 @@
-package com.ukeess.security.model;
+package com.ukeess.model.dto;
 
 import lombok.Data;
 
