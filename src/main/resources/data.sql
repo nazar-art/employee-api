@@ -19,7 +19,7 @@ VALUES ('Harry', true, 1);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('Ron', true, 1);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
-VALUES ('Hermiona', true, 1);
+VALUES ('Hermione', true, 1);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('Hagrid', true, 1);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
@@ -50,3 +50,14 @@ INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('The Bloody Baron', true, 2);
 INSERT INTO tblEmployees (empName, empActive, emp_dpid)
 VALUES ('Nearly Headless Nick', true, 2);
+
+
+-- ------------------------------
+-- Populate tblUser table
+-- ------------------------------
+INSERT INTO tblUsers(username, password, active, role)
+VALUES ('harry', 'potter', true, 'ADMIN');
+INSERT INTO tblUsers(username, password, active, role)
+VALUES ('ron', 'weasley', true, 'ADMIN');
+INSERT INTO tblUsers(username, password, active, role)
+VALUES ('hermione', 'granger', true, 'USER');

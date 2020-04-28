@@ -96,15 +96,15 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
 
     @Override
     public Optional<Employee> getById(int id) {
-            return Optional.ofNullable(
-                    getNamedParameterJdbcTemplate()
-                            .queryForObject("SELECT empID, empName, empActive, dpID, dpName " +
-                                            "FROM tblEmployees " +
-                                            "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
-                                            "WHERE empID=:id",
-                                    getIdParameterSource(id),
-                                    getEmployeeRowMapper())
-            );
+        return Optional.ofNullable(
+                getNamedParameterJdbcTemplate()
+                        .queryForObject("SELECT empID, empName, empActive, dpID, dpName " +
+                                        "FROM tblEmployees " +
+                                        "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
+                                        "WHERE empID=:id",
+                                getIdParameterSource(id),
+                                getEmployeeRowMapper())
+        );
     }
 
     @Override
@@ -116,21 +116,21 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
     public Page<Employee> getAll(Pageable pageable) {
         return getEmployeesPage("",
                 "SELECT empID, empName, empActive, dpID, dpName " +
-                "FROM tblEmployees, tblDepartments " +
-                "WHERE empID=dpID " +
-                "ORDER BY empID " +
-                "LIMIT %s OFFSET %s",
+                        "FROM tblEmployees, tblDepartments " +
+                        "WHERE empID=dpID " +
+                        "ORDER BY empID " +
+                        "LIMIT %s OFFSET %s",
                 pageable);
     }
 
     public Page<Employee> findAllEmployeesWithNameStartsWith(String nameSnippet, Pageable pageable) {
         return getEmployeesPage(nameSnippet,
                 "SELECT empID, empName, empActive, dpID, dpName " +
-                "FROM tblEmployees " +
-                "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
-                "WHERE empName LIKE ? " +
-                "ORDER BY empID " +
-                "LIMIT %s OFFSET %s",
+                        "FROM tblEmployees " +
+                        "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
+                        "WHERE empName LIKE ? " +
+                        "ORDER BY empID " +
+                        "LIMIT %s OFFSET %s",
                 pageable);
     }
 

@@ -2,7 +2,7 @@ package com.ukeess.security.filter;
 
 import com.ukeess.model.constant.SecurityConstants;
 import com.ukeess.security.TokenProvider;
-import com.ukeess.security.UserDetailsServiceMock;
+import com.ukeess.security.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +24,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private UserDetailsServiceMock userDetailsServiceMock;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private TokenProvider tokenProvider;
 
     @Override
@@ -43,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.userDetailsServiceMock.loadUserByUsername(userName);
+            UserDetails userDetails = this.userDetailsServiceImpl.loadUserByUsername(userName);
 
             if (tokenProvider.validateToken(jwt, userDetails)) {
 
