@@ -5,7 +5,7 @@ import com.ukeess.model.constant.SecurityConstants;
 import com.ukeess.model.dto.AuthRequestDTO;
 import com.ukeess.model.dto.AuthResponseDTO;
 import com.ukeess.security.TokenProvider;
-import com.ukeess.security.UserDetailsServiceMock;
+import com.ukeess.security.UserDetailsServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +30,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
-    private UserDetailsServiceMock userDetailsServiceMock;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private TokenProvider tokenProvider;
 
     @PostMapping
@@ -48,7 +48,7 @@ public class AuthController {
             throw new InvalidUserCredentialsException();
         }
 
-        UserDetails userDetails = userDetailsServiceMock.loadUserByUsername(authRequest.getUsername());
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(authRequest.getUsername());
         String jwt = tokenProvider.generateToken(userDetails);
 
         HttpHeaders httpHeaders = new HttpHeaders();

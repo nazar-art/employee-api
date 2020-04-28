@@ -1,6 +1,6 @@
 package com.ukeess.configuration;
 
-import com.ukeess.security.UserDetailsServiceMock;
+import com.ukeess.security.UserDetailsServiceImpl;
 import com.ukeess.security.filter.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,12 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsServiceMock userDetailsServiceMock;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private JwtRequestFilter jwtRequestFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceMock);
+        auth.userDetailsService(userDetailsServiceImpl);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/api/v2/api-docs", "/api/configuration/ui",
                         "/api/swagger-resources/**").permitAll()
                 .antMatchers("/v1/employees/**", "/v1/departments/**").authenticated()
+                /*.hasAuthority("ADMIN")*/
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
