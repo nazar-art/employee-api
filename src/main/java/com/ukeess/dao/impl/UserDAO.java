@@ -56,7 +56,7 @@ public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
 
     public Optional<AuthUser> findUserByUserName(String userName) {
         return Optional.of(getNamedParameterJdbcTemplate()
-                .queryForObject("SELECT * FROM tblUsers WHERE username=:name",
+                .queryForObject("SELECT id, username, password, active, role FROM tblUsers WHERE username=:name",
                         new MapSqlParameterSource("name", userName),
                         getUserRowMapper()));
     }

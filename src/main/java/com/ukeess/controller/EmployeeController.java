@@ -29,7 +29,8 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/employees")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmployeeController {
 
     private EmployeeService employeeService;
