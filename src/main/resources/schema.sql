@@ -1,6 +1,6 @@
+DROP TABLE IF EXISTS tblUsers;
 DROP TABLE IF EXISTS tblEmployees;
 DROP TABLE IF EXISTS tblDepartments;
-DROP TABLE IF EXISTS tblUsers;
 
 CREATE TABLE IF NOT EXISTS tblDepartments
 (
@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS tblDepartments
     dpName VARCHAR(25) NOT NULL,
     PRIMARY KEY (dpID)
 );
-
 
 CREATE TABLE IF NOT EXISTS tblEmployees
 (
@@ -20,7 +19,7 @@ CREATE TABLE IF NOT EXISTS tblEmployees
     FOREIGN KEY (emp_dpID) REFERENCES tblDepartments (dpID)
 );
 
--- CREATE tblUsers table - for jwt authorisation
+-- CREATE tblUsers table - for authorisation users
 CREATE TABLE IF NOT EXISTS tblUsers
 (
     id       SERIAL,

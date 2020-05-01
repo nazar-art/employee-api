@@ -1,4 +1,4 @@
-package com.ukeess.model;
+package com.ukeess.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class AuthUser {
 
     private Integer id;
     private String userName;

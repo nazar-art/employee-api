@@ -53,7 +53,7 @@ VALUES ('Nearly Headless Nick', true, 2);
 
 
 -- ------------------------------
--- Populate tblUser table
+-- Populate tblUsers table
 -- ------------------------------
 INSERT INTO tblUsers(username, password, active, role)
 VALUES ('harry', 'potter', true, 'ADMIN');

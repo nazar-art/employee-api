@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeDTO> searchByNameStartsWithPageable(String nameSnippet, Pageable pageable) {
+    public Page<EmployeeDTO> searchByNameStartsWith(String nameSnippet, Pageable pageable) {
         Assert.hasText(nameSnippet, "name of the employee can't be empty");
         return employeeDAO.findAllEmployeesWithNameStartsWith(nameSnippet, pageable)
                 .map(this::postLoad);
