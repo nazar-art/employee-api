@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AuthUser authUser = userDAO.findUserByUserName(userName)
                 .orElseThrow(() -> new EntityNotFoundException(userName));
 
-        log.info("Retrieve user for authentication: {} by user_name: {}", authUser, userName);
+        log.debug("Retrieve user for authentication: {} by user_name: {}", authUser, userName);
         return buildUserForAuthentication(authUser);
     }
 
