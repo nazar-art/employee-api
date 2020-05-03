@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,18 +94,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
             value = "Search for all Employees which name starts with provided name snippet")
-    public Page<EmployeeDTO> searchEmployeesByNameStartsWith(
+    public ResponseEntity<Page<EmployeeDTO>> searchEmployeesByNameStartsWith(
 
             @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
 
-            @ApiParam(value = "Employee's name snippet to get all employees which name starts with this snippet",
+            @ApiParam(value = "Employee's name snippet to get all employees which name starts with",
                     required = true)
             @RequestParam(value = "name") String nameSnippet) {
 
-        return employeeService.searchByNameStartsWithPageable(nameSnippet, PageRequest.of(pageNumber, pageSize));
+        return ResponseEntity.ok(
+                employeeService.searchByNameStartsWith(nameSnippet, PageRequest.of(pageNumber, pageSize))
+        );
     }
 }

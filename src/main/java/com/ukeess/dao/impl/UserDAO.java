@@ -1,7 +1,7 @@
 package com.ukeess.dao.impl;
 
 import com.ukeess.dao.BaseDAO;
-import com.ukeess.model.User;
+import com.ukeess.entity.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +24,8 @@ public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
         setJdbcTemplate(jdbcTemplate);
     }
 
-    private RowMapper<User> getUserRowMapper() {
-        return (rs, rowNum) -> User.builder()
+    private RowMapper<AuthUser> getUserRowMapper() {
+        return (rs, rowNum) -> AuthUser.builder()
                 .id(rs.getInt("id"))
                 .userName(rs.getString("username"))
                 .password(rs.getString("password"))
@@ -54,9 +54,9 @@ public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
         throw new UnsupportedOperationException();
     }
 
-    public Optional<User> findUserByUserName(String userName) {
+    public Optional<AuthUser> findUserByUserName(String userName) {
         return Optional.of(getNamedParameterJdbcTemplate()
-                .queryForObject("SELECT * FROM tblUsers WHERE username=:name",
+                .queryForObject("SELECT id, username, password, active, role FROM tblUsers WHERE username=:name",
                         new MapSqlParameterSource("name", userName),
                         getUserRowMapper()));
     }
