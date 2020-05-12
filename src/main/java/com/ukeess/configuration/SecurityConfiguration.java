@@ -21,8 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-    private JwtRequestFilter jwtRequestFilter;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

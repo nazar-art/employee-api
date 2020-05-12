@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

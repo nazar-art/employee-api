@@ -24,8 +24,8 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-    private TokenProvider tokenProvider;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final TokenProvider tokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/v1/departments")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     @GetMapping
     @ApiOperation(value = "Find All Departments", response = Department.class, responseContainer = "List")

@@ -16,7 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private DepartmentDAO departmentDAO;
+    private final DepartmentDAO departmentDAO;
 
     @Override
     public List<Department> findAllDepartments() {

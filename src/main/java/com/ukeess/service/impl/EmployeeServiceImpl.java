@@ -20,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeDAO employeeDAO;
+    private final EmployeeDAO employeeDAO;
 
     @Override
     public EmployeeDTO create(EmployeeDTO dto) {
