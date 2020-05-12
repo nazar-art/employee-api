@@ -12,7 +12,6 @@ spring:
   # = DATA SOURCE
   # ===============================
   datasource:
-    #    url: jdbc:mysql://localhost:3306/ukeess_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     url: jdbc:mysql://localhost:3306/ukeess_db?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
     username: root
     password: secret
@@ -28,6 +27,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
     properties:
       hibernate:

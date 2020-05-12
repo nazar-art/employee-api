@@ -17,22 +17,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Nazar Lelyak.
  */
-//@CrossOrigin(origins = "http://localhost:4200",
-//        methods = {RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/employees")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
 
     @PostMapping
@@ -42,6 +40,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid EmployeeDTO employeeDTO) {
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(employeeService.create(employeeDTO));
     }
@@ -49,8 +48,8 @@ public class EmployeeController {
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
     public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
-            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
-            @RequestParam(value = "size", required = false, defaultValue = "1") int pageSize) {
+            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(
                 employeeService.findAll(PageRequest.of(pageNumber, pageSize))
         );
@@ -59,7 +58,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     @ApiOperation(value = "Find Employee by ID", response = EmployeeDTO.class,
             notes = "Provide an id to look up specific employee")
-    public ResponseEntity findEmployeeById(
+    public ResponseEntity<EmployeeDTO> findEmployeeById(
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
             @PathVariable int id) {
         return employeeService.findById(id)
@@ -82,6 +81,7 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete an Employee",
             notes = "Provide an employee's id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(
             @ApiParam(value = "ID value for the employee you need to delete", required = true)
             @PathVariable int id) {
@@ -89,12 +89,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class, responseContainer = "List",
+    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
             value = "Search for all Employees which name starts with provided name snippet")
-    public List<EmployeeDTO> searchEmployeesByNameStartsWith(
+    public ResponseEntity<Page<EmployeeDTO>> searchEmployeesByNameStartsWith(
             @ApiParam(value = "Name snippet for the employee you looking for", required = true)
-            @RequestParam(value = "name") String nameSnippet) {
+            @RequestParam(value = "name") String nameSnippet,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
 
-        return employeeService.searchByNameStartsWith(nameSnippet);
+        return ResponseEntity.ok(employeeService.searchByNameStartsWith(nameSnippet,
+                        PageRequest.of(pageNumber, pageSize)));
     }
 }

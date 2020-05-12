@@ -2,7 +2,6 @@ package com.ukeess.service.impl;
 
 import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.entity.Employee;
-import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,33 +19,28 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        Employee empl = EmployeeMapper.mapToEmployee(employeeDTO);
-        return EmployeeMapper.mapToDTO(employeeRepository.save(empl));
+    public EmployeeDTO create(EmployeeDTO dto) {
+        return postLoad(employeeRepository.save(preSave(dto)));
     }
 
     @Override
     public Page<EmployeeDTO> findAll(Pageable pageable) {
         return employeeRepository.findAll(pageable)
-                .map(EmployeeMapper::mapToDTO);
+                .map(this::postLoad);
     }
 
     @Override
     public Optional<EmployeeDTO> findById(Integer id) {
         return employeeRepository.findById(id)
-                .map(EmployeeMapper::mapToDTO);
+                .map(this::postLoad);
     }
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-        if (employeeRepository.existsById(id)) {
-            Employee employee = EmployeeMapper.mapToEmployee(dto);
-            return EmployeeMapper.mapToDTO(employeeRepository.save(employee));
-        }
-        throw new EntityNotFoundException(id);
+            return postLoad(employeeRepository.save(preSave(dto)));
     }
 
     @Override
@@ -56,8 +49,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> searchByNameStartsWith(String name) {
-        return EmployeeMapper.mapToDtoList(employeeRepository.findAllByNameStartingWith(name));
+    public Page<EmployeeDTO> searchByNameStartsWith(String name, Pageable pageable) {
+        return employeeRepository.findAllByNameStartingWith(name, pageable)
+                .map(this::postLoad);
     }
 
+
+    private Employee preSave(EmployeeDTO dto) {
+        return EmployeeMapper.mapToEmployee(dto);
+    }
+
+    private EmployeeDTO postLoad(Employee entity) {
+        return EmployeeMapper.mapToDTO(entity);
+    }
 }

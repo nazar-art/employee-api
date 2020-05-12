@@ -29,9 +29,9 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-    private UserDetailsServiceMock userDetailsServiceMock;
-    private TokenProvider tokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceMock userDetailsServiceMock;
+    private final TokenProvider tokenProvider;
 
     @PostMapping
     @RequestMapping("/authenticate")

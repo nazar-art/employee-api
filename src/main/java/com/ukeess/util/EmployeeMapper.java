@@ -37,10 +37,4 @@ public class EmployeeMapper {
                 .department(dep)
                 .build();
     }
-
-    public List<EmployeeDTO> mapToDtoList(List<Employee> employees) {
-        return employees.stream()
-                .map(EmployeeMapper::mapToDTO)
-                .collect(Collectors.toList());
-    }
 }
