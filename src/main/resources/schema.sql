@@ -29,3 +29,5 @@ CREATE TABLE IF NOT EXISTS tblUsers
     role     VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE UNIQUE INDEX ix_username ON tblUsers(username);
