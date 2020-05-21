@@ -21,6 +21,6 @@ public class Department {
     private Integer id;
 
     @NotEmpty
-    @Size(min = 1, max = 25)
+    @Size(min = 1, max = 10)
     private String name;
 }

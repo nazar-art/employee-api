@@ -5,14 +5,14 @@ DROP TABLE IF EXISTS tblDepartments;
 CREATE TABLE IF NOT EXISTS tblDepartments
 (
     dpID   SERIAL,
-    dpName VARCHAR(25) NOT NULL,
+    dpName VARCHAR(10) NOT NULL,
     PRIMARY KEY (dpID)
 );
 
 CREATE TABLE IF NOT EXISTS tblEmployees
 (
     empID     SERIAL,
-    empName   VARCHAR(30)     NOT NULL,
+    empName   VARCHAR(20)     NOT NULL,
     empActive BIT(1)          NOT NULL,
     emp_dpID  BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (empID),
@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS tblEmployees
 CREATE TABLE IF NOT EXISTS tblUsers
 (
     id       SERIAL,
-    username VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    username VARCHAR(10) NOT NULL,
+    password VARCHAR(10) NOT NULL,
     active   BIT(1)      NOT NULL,
-    role     VARCHAR(50) NOT NULL,
+    role     VARCHAR(10) NOT NULL,
     PRIMARY KEY (id)
 );
 
