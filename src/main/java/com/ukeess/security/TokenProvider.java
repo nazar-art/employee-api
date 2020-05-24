@@ -20,8 +20,8 @@ public class TokenProvider {
     private static final String SECRET_KEY = "my-secret-token";
     public static final int TOKEN_EXPIRATION_HOURS = 240; // 10 days
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
+    public boolean validateToken(String token, UserDetails userDetails) {
+        String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
@@ -40,7 +40,7 @@ public class TokenProvider {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
+        Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
