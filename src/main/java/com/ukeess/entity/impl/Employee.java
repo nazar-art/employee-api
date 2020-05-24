@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
     private Boolean active;
     private Department department;
@@ -21,7 +22,7 @@ public class Employee extends BaseEntity {
     @Override
     public String toString() {
         return String.format(
-                "Employee [id=%d, name=%s, active=%s, department=%s]",
+                "Employee{id=%d, name=%s, active=%s, department=%s}",
                 this.id, this.name, this.active, this.department
         );
     }

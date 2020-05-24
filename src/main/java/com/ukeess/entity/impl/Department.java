@@ -9,8 +9,10 @@ import lombok.experimental.SuperBuilder;
  */
 @SuperBuilder
 public class Department extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
     @Override
     public String toString() {
-        return String.format("Department [id=%d, name=%s]", this.id, this.name);
+        return String.format("Department{id=%d, name=%s}", this.id, this.name);
     }
 }

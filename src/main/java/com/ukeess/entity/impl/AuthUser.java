@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthUser extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
     private String password;
     private Boolean active;
@@ -23,7 +24,7 @@ public class AuthUser extends BaseEntity {
     @Override
     public String toString() {
         return String.format(
-                "AuthUser [id=%d, name=%s, active=%s, role=%s]",
+                "AuthUser{id=%d, name=%s, active=%s, role=%s}",
                 this.id, this.name, this.active, this.role);
     }
 }

@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author Nazar Lelyak.
@@ -17,7 +18,8 @@ import javax.validation.constraints.Size;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable {
+    private static final long serialVersionUID = 0L;
 
     protected Integer id;
 
@@ -49,6 +51,6 @@ public abstract class BaseEntity {
 
     @Override
     public String toString() {
-        return String.format("BaseEntity [id=%d, name=%s]", id, name);
+        return String.format("BaseEntity{id=%d, name=%s}", id, name);
     }
 }
