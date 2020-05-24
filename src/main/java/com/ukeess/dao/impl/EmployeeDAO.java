@@ -1,16 +1,15 @@
 package com.ukeess.dao.impl;
 
+import com.google.common.collect.Lists;
 import com.ukeess.dao.BaseDAO;
-import com.ukeess.entity.Department;
-import com.ukeess.entity.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ukeess.dao.GenericDAO;
+import com.ukeess.entity.impl.Department;
+import com.ukeess.entity.impl.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -23,14 +22,18 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Repository
-public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<Employee> {
+public class EmployeeDAO extends BaseDAO<Employee> implements GenericDAO<Employee> {
 
-    @Autowired
-    public void setJt(JdbcTemplate jdbcTemplate) {
-        setJdbcTemplate(jdbcTemplate);
+    public static final String EMPLOYEES_TABLE_NAME = "tblEmployees";
+    public static final String EMPLOYEE_TABLE_ID = "empID";
+    public static final List<String> employeesFields = Lists.newArrayList("empName", "empActive", "emp_dpID");
+
+    public EmployeeDAO() {
+        super(EMPLOYEES_TABLE_NAME, EMPLOYEE_TABLE_ID, employeesFields);
     }
 
-    private RowMapper<Employee> getEmployeeRowMapper() {
+    @Override
+    protected RowMapper<Employee> getRowMapper() {
         return (rs, rowNum) -> {
             Department department = Department.builder()
                     .id(rs.getInt("dpID"))
@@ -57,12 +60,6 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
                 "departmentId", emp.getDepartment().getId());
     }
 
-    private boolean exists(int id) {
-        return getNamedParameterJdbcTemplate()
-                .queryForObject("SELECT COUNT(*) FROM tblEmployees WHERE empID=:id",
-                        getIdParameterSource(id), Integer.class) > 0;
-    }
-
     @Override
     public Employee save(Employee employee) {
         if (employee.getId() == null) {
@@ -85,7 +82,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
         return employee;
     }
 
-    private void update(Employee employee) {
+    protected void update(Employee employee) {
         getNamedParameterJdbcTemplate().update(
                 "UPDATE tblEmployees " +
                         "SET empName = :name, empActive = :active, emp_dpID = :departmentId " +
@@ -103,8 +100,13 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
                                         "LEFT JOIN tblDepartments ON emp_dpID = dpID " +
                                         "WHERE empID=:id",
                                 getIdParameterSource(id),
-                                getEmployeeRowMapper())
+                                getRowMapper())
         );
+    }
+
+    @Override
+    public Optional<Employee> getByName(String name) {
+        return Optional.empty();
     }
 
     @Override
@@ -143,7 +145,7 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
                 .query(String.format(query,
                         pageable.getPageSize(), pageable.getOffset()),
                         args,
-                        getEmployeeRowMapper());
+                        getRowMapper());
 
         return new PageImpl<>(employees, pageable, getTotalRows());
     }

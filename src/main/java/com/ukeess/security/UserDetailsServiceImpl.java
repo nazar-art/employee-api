@@ -2,7 +2,7 @@ package com.ukeess.security;
 
 import com.google.common.collect.Lists;
 import com.ukeess.dao.impl.UserDAO;
-import com.ukeess.entity.AuthUser;
+import com.ukeess.entity.impl.AuthUser;
 import com.ukeess.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AuthUser authUser = userDAO.findUserByUserName(userName)
+        AuthUser authUser = userDAO.getByName(userName)
                 .orElseThrow(() -> new EntityNotFoundException(userName));
 
         log.debug("Retrieve user for authentication: {} by user_name: {}", authUser, userName);
@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> authorities = Lists.newArrayList(grantedAuthority);
 
         return new User(
-                authUser.getUserName(),
+                authUser.getName(),
                 authUser.getPassword(),
                 authUser.getActive(),
                 true,

@@ -1,7 +1,7 @@
 package com.ukeess.service.impl;
 
 import com.ukeess.dao.impl.EmployeeDAO;
-import com.ukeess.entity.Employee;
+import com.ukeess.entity.impl.Employee;
 import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
@@ -55,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDAO.findAllEmployeesWithNameStartsWith(nameSnippet, pageable)
                 .map(this::postLoad);
     }
+
 
     private Employee preSave(EmployeeDTO dto) {
         return EmployeeMapper.mapToEmployee(dto);

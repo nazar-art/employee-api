@@ -1,63 +1,38 @@
 package com.ukeess.dao.impl;
 
+import com.google.common.collect.Lists;
 import com.ukeess.dao.BaseDAO;
-import com.ukeess.entity.AuthUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.ukeess.dao.GenericDAO;
+import com.ukeess.entity.impl.AuthUser;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * @author Nazar Lelyak.
  */
 @Repository
-public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
+public class UserDAO extends BaseDAO<AuthUser> implements GenericDAO<AuthUser> {
 
-    @Autowired
-    public void setJt(JdbcTemplate jdbcTemplate) {
-        setJdbcTemplate(jdbcTemplate);
+    public static final String USERS_TABLE_NAME = "tblUsers";
+    public static final String USER_TABLE_ID = "id";
+    public static final List<String> usersFields = Lists.newArrayList("name", "password", "active", "role");
+
+    public UserDAO() {
+        super(USERS_TABLE_NAME,
+                USER_TABLE_ID,
+                usersFields);
     }
 
-    private RowMapper<AuthUser> getUserRowMapper() {
+    @Override
+    protected RowMapper<AuthUser> getRowMapper() {
         return (rs, rowNum) -> AuthUser.builder()
                 .id(rs.getInt("id"))
-                .userName(rs.getString("username"))
+                .name(rs.getString("name"))
                 .password(rs.getString("password"))
                 .active(rs.getBoolean("active"))
                 .role(rs.getString("role"))
                 .build();
-    }
-
-    @Override
-    public Object save(Object entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional getById(int id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Page getAll(Pageable pageable) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void deleteById(int id) {
-        throw new UnsupportedOperationException();
-    }
-
-    public Optional<AuthUser> findUserByUserName(String userName) {
-        return Optional.of(getNamedParameterJdbcTemplate()
-                .queryForObject("SELECT id, username, password, active, role FROM tblUsers WHERE username=:name",
-                        new MapSqlParameterSource("name", userName),
-                        getUserRowMapper()));
     }
 }

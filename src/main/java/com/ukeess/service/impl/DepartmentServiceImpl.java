@@ -1,7 +1,7 @@
 package com.ukeess.service.impl;
 
 import com.ukeess.dao.impl.DepartmentDAO;
-import com.ukeess.entity.Department;
+import com.ukeess.entity.impl.Department;
 import com.ukeess.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

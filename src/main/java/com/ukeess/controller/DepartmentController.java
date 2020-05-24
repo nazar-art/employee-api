@@ -1,6 +1,6 @@
 package com.ukeess.controller;
 
-import com.ukeess.entity.Department;
+import com.ukeess.entity.impl.Department;
 import com.ukeess.service.DepartmentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

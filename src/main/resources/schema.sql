@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS tblEmployees
 CREATE TABLE IF NOT EXISTS tblUsers
 (
     id       SERIAL,
-    username VARCHAR(10) NOT NULL,
+    name     VARCHAR(10) NOT NULL,
     password VARCHAR(10) NOT NULL,
     active   BIT(1)      NOT NULL,
     role     VARCHAR(10) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE UNIQUE INDEX ix_username ON tblUsers(username);
+CREATE UNIQUE INDEX ix_username ON tblUsers (name);

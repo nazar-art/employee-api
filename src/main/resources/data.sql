@@ -55,9 +55,9 @@ VALUES ('Nearly Headless Nick', true, 2);
 -- ------------------------------
 -- Populate tblUsers table
 -- ------------------------------
-INSERT INTO tblUsers(username, password, active, role)
+INSERT INTO tblUsers(name, password, active, role)
 VALUES ('harry', 'potter', true, 'ADMIN');
-INSERT INTO tblUsers(username, password, active, role)
+INSERT INTO tblUsers(name, password, active, role)
 VALUES ('ron', 'weasley', true, 'ADMIN');
-INSERT INTO tblUsers(username, password, active, role)
+INSERT INTO tblUsers(name, password, active, role)
 VALUES ('hermione', 'granger', true, 'USER');
