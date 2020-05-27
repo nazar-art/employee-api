@@ -1,9 +1,15 @@
-FROM openjdk:11-jre-slim
+# For Java 11, try this
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} employee-api.jar
+# Refer to Maven build -> finalName
+ARG JAR_FILE=target/employee-api.jar
 
-ENTRYPOINT ["java", "-jar", "/employee-api.jar"]
+# cd /opt/app
+WORKDIR /opt/app
+
+# cp target/employee-api.jar /opt/app/app.jar
+COPY ${JAR_FILE} app.jar
+
+# java -jar /opt/app/app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
 EXPOSE 8080
-
-

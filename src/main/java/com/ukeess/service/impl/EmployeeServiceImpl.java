@@ -50,7 +50,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Page<EmployeeDTO> searchByNameStartsWith(String name, Pageable pageable) {
-        return employeeRepository.findAllByNameStartingWith(name, pageable)
+//        return employeeRepository.findAllByNameStartingWith(name, pageable)
+        return employeeRepository.findAllByNameIgnoreCaseStartsWith(name, pageable)
                 .map(this::postLoad);
     }
 
