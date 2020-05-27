@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+
+  employee-database:
+    image: mysql:latest
+    command: mysqld --user=root --verbose
+    volumes:
+      - /mysql_init:/docker-entrypoint-initdb.d
+    # - ./mysql-init-files:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=testuser
+      - MYSQL_PASSWORD=testuser
+      - MYSQL_DATABASE=ukeess_db?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '3600:3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  employee-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/ukeess_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
+
