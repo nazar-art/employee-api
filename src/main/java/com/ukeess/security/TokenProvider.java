@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class TokenProvider {
 
     private static final String SECRET_KEY = "my-secret-token";
-    public static final int TOKEN_EXPIRATION_HOURS = 240; // 10 days
+    private static final int TOKEN_EXPIRATION_HOURS = 240; // 10 days
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
