@@ -149,7 +149,7 @@ You could use **Docker** for running the app.
 
 Execute from project location for creating new image:
 
-    docker build -t employee-api-docker .
+    docker build -t employee-api-docker:latest .
 
  check with:
  
@@ -157,6 +157,6 @@ Execute from project location for creating new image:
     
 Run new image
 
-    docker run -d -p 8080:8080 employee-api-docker    
+    docker run -d -p 8080:8080 employee-api-docker   
     
 Now you can use **Postman** or **Http-client** for calls.    
