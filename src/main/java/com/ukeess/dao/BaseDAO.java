@@ -1,6 +1,7 @@
 package com.ukeess.dao;
 
 import com.ukeess.entity.BaseEntity;
+import com.ukeess.model.dto.TableData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,45 +23,53 @@ import java.util.Optional;
 @Slf4j
 public abstract class BaseDAO<E extends BaseEntity> extends NamedParameterJdbcDaoSupport implements GenericDAO<E> {
 
+
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
         setJdbcTemplate(jdbcTemplate);
     }
 
-    private final String tableName;
-    private final String tableIdName;
+//    private final String tableName;
+//    private final String tableIdName;
+//    private final String tableNameField;
+
+    private final TableData tableData;
+
     private final String insertSQL;
     private final String updateSQL;
 
-    public BaseDAO(String tableName, String tableIdName, List<String> fields) {
-        this.tableName = tableName;
-        this.tableIdName = tableIdName;
+    //    public BaseDAO(String tableName, String tableIdName, String tableNameField, List<String> fields) {
+    public BaseDAO(TableData td) {
+//        this.tableName = tableName;
+//        this.tableIdName = tableIdName;
+//        this.tableNameField = tableNameField;
+        this.tableData = td;
 
         // init SQLs
         StringBuilder sbInsertSQL = new StringBuilder();
         StringBuilder sbUpdateSQL = new StringBuilder();
 
-        sbInsertSQL.append("INSERT INTO ").append(tableName).append(" (");
-        sbUpdateSQL.append("UPDATE ").append(tableName).append(" SET ");
+        sbInsertSQL.append("INSERT INTO ").append(tableData.getTableName()).append(" (");
+        sbUpdateSQL.append("UPDATE ").append(tableData.getTableName()).append(" SET ");
 
-        for (int i = 0; i < fields.size(); i++) {
+        for (int i = 0; i < tableData.getFields().size(); i++) {
             if (i > 0) {
                 sbInsertSQL.append(", ");
                 sbUpdateSQL.append(", ");
             }
-            sbInsertSQL.append(fields.get(i));
-            sbUpdateSQL.append(fields.get(i)).append("=:").append(fields.get(i));
+            sbInsertSQL.append(tableData.getFields().get(i));
+            sbUpdateSQL.append(tableData.getFields().get(i)).append("=:").append(tableData.getFields().get(i));
         }
 
         sbInsertSQL.append(") ").append("VALUES (");
-        for (int i = 0; i < fields.size(); i++) {
+        for (int i = 0; i < tableData.getFields().size(); i++) {
             if (i > 0) {
                 sbInsertSQL.append(",");
             }
-            sbInsertSQL.append(":").append(fields.get(i));
+            sbInsertSQL.append(":").append(tableData.getFields().get(i));
         }
         sbInsertSQL.append(")");
-        sbUpdateSQL.append(String.format(" WHERE %s=:id", tableIdName));
+        sbUpdateSQL.append(String.format(" WHERE %s=:id", tableData.getId()));
 
         this.insertSQL = sbInsertSQL.toString();
         this.updateSQL = sbUpdateSQL.toString();
@@ -100,7 +109,7 @@ public abstract class BaseDAO<E extends BaseEntity> extends NamedParameterJdbcDa
     public Optional<E> getById(int id) {
         return Optional.of(getNamedParameterJdbcTemplate()
                 .queryForObject(
-                        String.format("SELECT * FROM %s WHERE %s=:id", tableName, tableIdName),
+                        String.format("SELECT * FROM %s WHERE %s=:id", tableData.getTableName(), tableData.getId()),
                         getIdParameterSource(id),
                         getRowMapper()
                 ));
@@ -111,7 +120,7 @@ public abstract class BaseDAO<E extends BaseEntity> extends NamedParameterJdbcDa
     public Optional<E> getByName(String name) {
         return Optional.of(getNamedParameterJdbcTemplate()
                 .queryForObject(
-                        String.format("SELECT * FROM %s WHERE name=:name", tableName),
+                        String.format("SELECT * FROM %s WHERE %s=:name", tableData.getTableName(), tableData.getName()),
                         getNameParameterSource(name),
                         getRowMapper()
                 ));
@@ -121,7 +130,7 @@ public abstract class BaseDAO<E extends BaseEntity> extends NamedParameterJdbcDa
     @Override
     public void deleteById(int id) {
         getNamedParameterJdbcTemplate()
-                .update(String.format("DELETE FROM %s WHERE id=:id", tableName),
+                .update(String.format("DELETE FROM %s WHERE id=:id", tableData.getTableName()),
                         getIdParameterSource(id));
     }
 
@@ -132,15 +141,15 @@ public abstract class BaseDAO<E extends BaseEntity> extends NamedParameterJdbcDa
                                 "FROM %s " +
                                 "ORDER BY id " +
                                 "LIMIT %s OFFSET %s",
-                        tableName,
+                        tableData.getTableName(),
                         pageable.getPageSize(), pageable.getOffset()),
-                        new String[] {},
+                        new String[]{},
                         getRowMapper());
         return new PageImpl<>(result, pageable, getTotalRows());
     }
 
     private long getTotalRows() {
         return getJdbcTemplate()
-                .queryForObject(String.format("select count(*) from %s", tableName), long.class);
+                .queryForObject(String.format("select count(*) from %s", tableData.getTableName()), long.class);
     }
 }

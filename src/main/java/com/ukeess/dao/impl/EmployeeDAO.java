@@ -1,10 +1,10 @@
 package com.ukeess.dao.impl;
 
-import com.google.common.collect.Lists;
 import com.ukeess.dao.BaseDAO;
 import com.ukeess.dao.GenericDAO;
 import com.ukeess.entity.impl.Department;
 import com.ukeess.entity.impl.Employee;
+import com.ukeess.model.dto.TableData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +24,16 @@ import java.util.Optional;
 @Repository
 public class EmployeeDAO extends BaseDAO<Employee> implements GenericDAO<Employee> {
 
-    public static final String EMPLOYEES_TABLE_NAME = "tblEmployees";
-    public static final String EMPLOYEE_TABLE_ID = "empID";
-    public static final List<String> employeesFields = Lists.newArrayList("empName", "empActive", "emp_dpID");
+    private static final TableData empTable = TableData.builder()
+            .tableName("tblEmployees")
+            .id("empID")
+            .name("empName")
+            .field("empActive")
+            .field("emp_dpID")
+            .build();
 
     public EmployeeDAO() {
-        super(EMPLOYEES_TABLE_NAME, EMPLOYEE_TABLE_ID, employeesFields);
+        super(empTable);
     }
 
     @Override

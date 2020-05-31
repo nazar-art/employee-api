@@ -1,9 +1,9 @@
 package com.ukeess.dao.impl;
 
-import com.google.common.collect.Lists;
 import com.ukeess.dao.BaseDAO;
 import com.ukeess.dao.GenericDAO;
 import com.ukeess.entity.impl.Department;
+import com.ukeess.model.dto.TableData;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,12 +15,15 @@ import java.util.List;
 @Repository
 public class DepartmentDAO extends BaseDAO<Department> implements GenericDAO<Department> {
 
-    public static final String DEPARTMENTS_TABLE_NAME = "tblDepartments";
-    public static final String DEPARTMENTS_ID_NAME = "dpID";
-    public static final List<String> departmentsFields = Lists.newArrayList("dpName");
+    private static final TableData dpTable = TableData.builder()
+            .tableName("tblDepartments")
+            .id("dpID")
+            .name("dpName")
+            .field("dpName")
+            .build();
 
     public DepartmentDAO() {
-        super(DEPARTMENTS_TABLE_NAME, DEPARTMENTS_ID_NAME, departmentsFields);
+        super(dpTable);
     }
 
     @Override
