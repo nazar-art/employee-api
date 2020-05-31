@@ -1,5 +1,6 @@
 # For Java 11, try this
-FROM adoptopenjdk/openjdk11:alpine-jre
+#FROM adoptopenjdk/openjdk11:alpine-jre
+FROM maslick/minimalka
 
 # Refer to Maven build -> finalName
 ARG JAR_FILE=target/employee-api.jar
