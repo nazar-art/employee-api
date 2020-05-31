@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Repository
-public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
+public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO<AuthUser> {
 
     @Autowired
     public void setJt(JdbcTemplate jdbcTemplate) {
@@ -26,26 +26,26 @@ public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
 
     private RowMapper<AuthUser> getUserRowMapper() {
         return (rs, rowNum) -> AuthUser.builder()
-                .id(rs.getInt("id"))
-                .userName(rs.getString("username"))
-                .password(rs.getString("password"))
-                .active(rs.getBoolean("active"))
-                .role(rs.getString("role"))
+                .id(rs.getInt("userID"))
+                .userName(rs.getString("userName"))
+                .password(rs.getString("userPassword"))
+                .active(rs.getBoolean("userActive"))
+                .role(rs.getString("userRole"))
                 .build();
     }
 
     @Override
-    public Object save(Object entity) {
+    public AuthUser save(AuthUser entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional getById(int id) {
+    public Optional<AuthUser> getById(int id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Page getAll(Pageable pageable) {
+    public Page<AuthUser> getAll(Pageable pageable) {
         throw new UnsupportedOperationException();
     }
 
@@ -56,7 +56,7 @@ public class UserDAO extends NamedParameterJdbcDaoSupport implements BaseDAO {
 
     public Optional<AuthUser> findUserByUserName(String userName) {
         return Optional.of(getNamedParameterJdbcTemplate()
-                .queryForObject("SELECT id, username, password, active, role FROM tblUsers WHERE username=:name",
+                .queryForObject("SELECT userID, userName, userPassword, userActive, userRole FROM tblUsers WHERE userName=:name",
                         new MapSqlParameterSource("name", userName),
                         getUserRowMapper()));
     }
