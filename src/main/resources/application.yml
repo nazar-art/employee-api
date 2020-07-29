@@ -40,6 +40,20 @@ spring:
         format_sql: true
 
 # ===============================
+# = METRICS
+# ===============================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: ALWAYS
+
+# ===============================
 # = LOGGING
 # ===============================
 logging:
