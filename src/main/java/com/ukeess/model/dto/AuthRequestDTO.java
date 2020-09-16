@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Data
 public class AuthRequestDTO implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(min = 2, max = 20)
