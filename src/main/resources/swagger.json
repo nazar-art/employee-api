@@ -1,0 +1,870 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Solution for technical task",
+    "version": "1.0",
+    "title": "Employee API",
+    "termsOfService": "Free to use, after author allowance :-)",
+    "contact": {
+      "name": "Nazar Lelyak",
+      "url": "https://www.instagram.com/nazar.lelyak",
+      "email": "nazar.lelyak@gmail.com"
+    },
+    "license": {
+      "name": "API License"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth-controller",
+      "description": "Auth Controller"
+    },
+    {
+      "name": "department-controller",
+      "description": "Department Controller"
+    },
+    {
+      "name": "employee-controller",
+      "description": "Employee Controller"
+    }
+  ],
+  "paths": {
+    "/authenticate": {
+      "get": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "head": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingHEAD",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingDELETE",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "auth-controller"
+        ],
+        "summary": "Authenticate for working with API",
+        "description": "Provide a valid Credentials in a body",
+        "operationId": "createAuthenticationTokenUsingPATCH",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "authRequest",
+            "required": true,
+            "schema": {
+              "originalRef": "AuthRequestDTO",
+              "$ref": "#/definitions/AuthRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "AuthResponseDTO",
+              "$ref": "#/definitions/AuthResponseDTO"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/departments": {
+      "get": {
+        "tags": [
+          "department-controller"
+        ],
+        "summary": "Find All Departments",
+        "operationId": "findAllDepartmentsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "originalRef": "Department",
+                "$ref": "#/definitions/Department"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/departments/{id}": {
+      "get": {
+        "tags": [
+          "department-controller"
+        ],
+        "summary": "Find Department by ID",
+        "description": "Provide an id to look up specific department",
+        "operationId": "findDepartmentByIdUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID value for the department you need to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "Department",
+              "$ref": "#/definitions/Department"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/employees": {
+      "get": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Find All Employees",
+        "operationId": "findAllEmployeesUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Create new Employee",
+        "description": "Provide an Employee to be added in a body",
+        "operationId": "createEmployeeUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "employeeDTO",
+            "description": "Employee object to be created",
+            "required": true,
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/employees/search": {
+      "get": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Search for all Employees which name starts with provided name snippet",
+        "description": "Provide a name snippet",
+        "operationId": "searchEmployeesByNameStartsWithUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Employee's name snippet to get all employees which name starts with",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/employees/{id}": {
+      "get": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Find Employee by ID",
+        "description": "Provide an id to look up specific employee",
+        "operationId": "findEmployeeByIdUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID value for the employee you need to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Update an Employee",
+        "description": "Provide an id of employee for update, and new representation of employee",
+        "operationId": "updateEmployeeUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID value for the employee you need to update",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "newEmployee",
+            "description": "Updated instance for employee object",
+            "required": true,
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "originalRef": "EmployeeDTO",
+              "$ref": "#/definitions/EmployeeDTO"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "employee-controller"
+        ],
+        "summary": "Delete an Employee",
+        "description": "Provide an employee's id",
+        "operationId": "deleteEmployeeUsingDELETE",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID value for the employee you need to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "AuthRequestDTO": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "AuthRequestDTO"
+    },
+    "AuthResponseDTO": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "AuthResponseDTO"
+    },
+    "Department": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "Department"
+    },
+    "EmployeeDTO": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "departmentId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "departmentName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "EmployeeDTO"
+    },
+    "Pageable": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "paged": {
+          "type": "boolean"
+        },
+        "sort": {
+          "originalRef": "Sort",
+          "$ref": "#/definitions/Sort"
+        },
+        "unpaged": {
+          "type": "boolean"
+        }
+      },
+      "title": "Pageable"
+    },
+    "Page«EmployeeDTO»": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "array",
+          "items": {
+            "originalRef": "EmployeeDTO",
+            "$ref": "#/definitions/EmployeeDTO"
+          }
+        },
+        "empty": {
+          "type": "boolean"
+        },
+        "first": {
+          "type": "boolean"
+        },
+        "last": {
+          "type": "boolean"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numberOfElements": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageable": {
+          "originalRef": "Pageable",
+          "$ref": "#/definitions/Pageable"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sort": {
+          "originalRef": "Sort",
+          "$ref": "#/definitions/Sort"
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Page«EmployeeDTO»"
+    },
+    "Sort": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "boolean"
+        },
+        "sorted": {
+          "type": "boolean"
+        },
+        "unsorted": {
+          "type": "boolean"
+        }
+      },
+      "title": "Sort"
+    }
+  }
+}
