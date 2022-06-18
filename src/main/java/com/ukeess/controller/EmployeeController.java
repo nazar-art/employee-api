@@ -92,7 +92,7 @@ public class EmployeeController {
 
     @GetMapping("/search")
     @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
-            value = "Search for all Employees which name starts with provided name snippet")
+            value = "Search for all Employees who's name starts with provided name snippet")
     public ResponseEntity<Page<EmployeeDTO>> searchEmployeesByNameStartsWith(
 
             @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
