@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class DepartmentRestControllerSystemTest {
+class DepartmentRestControllerTest {
 
     private static final int DEPARTMENT_ID_ONE = 11;
     private static final int DEPARTMENT_ID_TWO = 22;
