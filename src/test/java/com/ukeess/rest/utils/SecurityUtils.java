@@ -28,7 +28,7 @@ public class SecurityUtils {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * TOKEN_EXPIRATION_HOURS))
-                .signWith(SignatureAlgorithm.HS256, "my-secret-token").compact();
+                .signWith(SignatureAlgorithm.HS256, "my-token-secret").compact();
         return SecurityConstants.TOKEN_BEARER_PREFIX + jwt;
     }
 

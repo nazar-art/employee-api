@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -31,10 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Nazar Lelyak.
  */
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class DepartmentRestIntegrationTest {
+class DepartmentRestControllerSystemTest {
 
     private static final int DEPARTMENT_ID_ONE = 11;
     private static final int DEPARTMENT_ID_TWO = 22;
@@ -53,12 +55,12 @@ class DepartmentRestIntegrationTest {
     void findAllDepartments_Success() throws Exception {
         when(departmentService.findAllDepartments())
                 .thenReturn(List.of(Department.builder()
-                                .id(11)
+                                .id(DEPARTMENT_ID_ONE)
                                 .name(DEPARTMENT_NAME_ONE)
                                 .build(),
                         Department.builder()
-                                .id(22)
-                                .name("test_name_2")
+                                .id(DEPARTMENT_ID_TWO)
+                                .name(DEPARTMENT_NAME_TWO)
                                 .build()));
 
         mockMvc.perform(get(DEPARTMENTS_URI)
@@ -67,11 +69,11 @@ class DepartmentRestIntegrationTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$[0].id").value(DEPARTMENT_ID_ONE))
-                .andExpect(jsonPath("$[0].name").value(DEPARTMENT_NAME_ONE))
-                .andExpect(jsonPath("$[1].id").value(DEPARTMENT_ID_TWO))
-                .andExpect(jsonPath("$[1].name").value(DEPARTMENT_NAME_TWO));
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$[0].id").value(11))
+                .andExpect(jsonPath("$[0].name").value("test_department_name_one"))
+                .andExpect(jsonPath("$[1].id").value(22))
+                .andExpect(jsonPath("$[1].name").value("test_department_name_two"));
 
         verify(departmentService).findAllDepartments();
         verifyNoMoreInteractions(departmentService);
@@ -90,7 +92,10 @@ class DepartmentRestIntegrationTest {
     @Test
     void findAllDepartments_WithWrongToken() throws Exception {
         mockMvc.perform(get(DEPARTMENTS_URI)
-                        .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken("some-incorrect-name"))
+                        .header(
+                                SecurityConstants.AUTHORIZATION_HEADER,
+                                SecurityUtils.generateToken("some-incorrect-name")
+                        )
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andDo(print())
@@ -102,9 +107,9 @@ class DepartmentRestIntegrationTest {
     void findDepartmentById_Success() throws Exception {
         when(departmentService.findById(anyInt()))
                 .thenReturn(Optional.of(Department.builder()
-                                .id(DEPARTMENT_ID_ONE)
-                                .name(DEPARTMENT_NAME_ONE)
-                                .build()));
+                        .id(DEPARTMENT_ID_ONE)
+                        .name(DEPARTMENT_NAME_ONE)
+                        .build()));
 
         mockMvc.perform(get(DEPARTMENT_URI)
                         .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken())
@@ -112,9 +117,9 @@ class DepartmentRestIntegrationTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.id").value(DEPARTMENT_ID_ONE))
-                .andExpect(jsonPath("$.name").value(DEPARTMENT_NAME_ONE));
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.id").value(11))
+                .andExpect(jsonPath("$.name").value("test_department_name_one"));
 
         verify(departmentService).findById(DEPARTMENT_ID_ONE);
         verifyNoMoreInteractions(departmentService);

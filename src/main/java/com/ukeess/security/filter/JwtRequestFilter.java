@@ -2,7 +2,7 @@ package com.ukeess.security.filter;
 
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.security.provider.TokenProvider;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ import java.io.IOException;
  * @author Nazar Lelyak.
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;

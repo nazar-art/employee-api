@@ -23,3 +23,6 @@ logging:
     org.hibernate: debug
     sql: debug
     web: debug
+
+token:
+  secret_key_mock: 'my-token-secret'
