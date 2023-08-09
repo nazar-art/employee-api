@@ -1,0 +1,73 @@
+
+### Authenticate user
+POST localhost:8080/api/authenticate
+Content-Type: application/json
+
+{
+  "username": "harry",
+  "password": "potter"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### GET all departments
+GET localhost:8080/api/v1/departments
+Authorization: Bearer {{auth_token}}
+
+### GET Department by ID
+GET localhost:8080/api/v1/departments/2
+Authorization: Bearer {{auth_token}}
+
+
+### GET all employees
+GET localhost:8080/api/v1/employees?size=30
+Authorization: Bearer {{auth_token}}
+
+### GET Employee by ID
+GET localhost:8080/api/v1/employees/1
+Authorization: Bearer {{auth_token}}
+
+### Search employee by R as beginning of a name
+GET localhost:8080/api/v1/employees/search?name=r
+Authorization: Bearer {{auth_token}}
+
+### POST new employee
+POST localhost:8080/api/v1/employees
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Fernando Magelan",
+  "departmentId": 3,
+  "active": true,
+  "departmentName": "Ravenclaw"
+}
+
+### GET new employee
+GET localhost:8080/api/v1/employees/19
+Authorization: Bearer {{auth_token}}
+
+### UDPATE employee
+PUT localhost:8080/api/v1/employees/19
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "id": 19,
+  "name": "Christopher Columbus",
+  "departmentId": 2,
+  "active": true,
+  "departmentName": "Hufflepuff"
+}
+
+### DELETE employee
+DELETE localhost:8080/api/v1/employees/20
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+
+
+
+
