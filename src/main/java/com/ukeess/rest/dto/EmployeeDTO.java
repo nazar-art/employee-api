@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -19,9 +21,13 @@ public class EmployeeDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
+    @NotNull
+    @Size(min = 2, max = 20)
     private String name;
+    @NotNull
     private Boolean active;
 
+    @NotNull
     private Integer departmentId;
     private String departmentName;
 }
