@@ -141,6 +141,12 @@ Any next request should contain that token at header
     HTTP/1.1 204 
     ...
 
+### Actuator 
+
+Actuator metrics are available at URL:
+
+    http://localhost:8080/api/actuator
+
 --- 
 
 ### Docker set up 

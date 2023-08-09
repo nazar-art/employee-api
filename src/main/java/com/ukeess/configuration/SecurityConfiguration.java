@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/api/v2/api-docs",
                         "/api/configuration/ui",
                         "/api/swagger-resources/**",
+                        "/api/actuator/**",
                         "/api/h2-console/**"
                 ).permitAll()
                 .antMatchers("/v1/employees/**", "/v1/departments/**").authenticated()
