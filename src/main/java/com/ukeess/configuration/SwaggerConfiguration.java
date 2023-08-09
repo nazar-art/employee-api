@@ -30,9 +30,7 @@ public class SwaggerConfiguration {
                 "Solution for technical task",
                 "1.0",
                 "Free to use, after author allowance :-)",
-                new springfox.documentation.service.Contact("Nazar Lelyak",
-                        "https://www.instagram.com/nazar.lelyak",
-                        "nazar.lelyak@gmail.com"),
+                null,
                 "API License",
                 "",
                 Collections.emptyList());

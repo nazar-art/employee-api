@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -33,11 +32,12 @@ public class AuthController {
     private final UserDetailsServiceMock userDetailsServiceMock;
     private final TokenProvider tokenProvider;
 
-    @PostMapping
-    @RequestMapping("/authenticate")
-    @ApiOperation(value = "Authenticate for working with API",
+    @ApiOperation(
+            value = "Authenticate for working with an API",
             notes = "Provide a valid Credentials in a body",
-            response = AuthResponseDTO.class)
+            response = AuthResponseDTO.class
+    )
+    @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@RequestBody @Valid AuthRequestDTO authRequest) {
 
         try {
