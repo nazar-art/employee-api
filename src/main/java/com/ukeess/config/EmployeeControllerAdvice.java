@@ -33,4 +33,9 @@ public class EmployeeControllerAdvice {
                 .body(ErrorResponse.of(e.getMessage()));
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of(e.getMessage()));
+    }
 }

@@ -1,0 +1,25 @@
+
+spring:
+  # ===============================
+  # = DATA SOURCE
+  # ===============================
+  datasource:
+    initialization-mode: always
+    url: jdbc:h2:mem:ukeess_test_db
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+
+# ===============================
+# = LOGGING
+# ===============================
+logging:
+  level:
+    com.ukeess: debug
+    org.hibernate: debug
+    sql: debug
+    web: debug

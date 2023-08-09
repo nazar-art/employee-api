@@ -20,7 +20,7 @@ public class EmployeeDTO {
     private Integer id;
 
     @NotNull
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 25)
     private String name;
     private Boolean active;
 

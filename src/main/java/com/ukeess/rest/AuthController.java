@@ -3,9 +3,8 @@ package com.ukeess.rest;
 import com.ukeess.exception.IncorrectUserCredentialsException;
 import com.ukeess.rest.dto.AuthRequestDTO;
 import com.ukeess.rest.dto.AuthResponseDTO;
-import com.ukeess.security.TokenProvider;
-import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.constant.SecurityConstants;
+import com.ukeess.security.provider.TokenProvider;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsServiceMock userDetailsServiceMock;
+    private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
 
     @ApiOperation(
@@ -47,7 +47,7 @@ public class AuthController {
             throw new IncorrectUserCredentialsException();
         }
 
-        UserDetails userDetails = userDetailsServiceMock.loadUserByUsername(authRequest.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
         String jwt = tokenProvider.generateToken(userDetails);
 
         HttpHeaders httpHeaders = new HttpHeaders();

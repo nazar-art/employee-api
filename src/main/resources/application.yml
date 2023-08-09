@@ -1,12 +1,12 @@
 server:
   error:
-    path: /error
+    path: '/error'
   servlet:
-    context-path: /api
+    context-path: '/api'
 
 spring:
   application:
-    name: employee-api
+    name: 'employee-api'
 
   # ===============================
   # = DATA SOURCE
@@ -59,3 +59,11 @@ logging:
   level:
     com.ukeess: debug
 #    org.hibernate: debug
+
+# ===============================
+# = MOCK DETAILS
+# ===============================
+token:
+  secret_key_mock: 'fdc0fdaa-b4c7-46eb-a770-92da5823358b'
+  username_mock: 'harry'
+  password_mock: 'potter'

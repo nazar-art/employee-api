@@ -1,12 +1,12 @@
 package com.ukeess.security.filter;
 
-import com.ukeess.security.TokenProvider;
-import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.constant.SecurityConstants;
+import com.ukeess.security.provider.TokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,12 +24,11 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final UserDetailsServiceMock userDetailsServiceMock;
+    private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader(SecurityConstants.AUTHORIZATION_HEADER);
 
@@ -37,13 +36,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (authHeader != null && authHeader.startsWith(SecurityConstants.TOKEN_BEARER_PREFIX)) {
-            jwt = authHeader.substring(7);
+            jwt = authHeader.substring(SecurityConstants.TOKEN_BEARER_PREFIX.length());
             userName = tokenProvider.extractUsername(jwt);
         }
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.userDetailsServiceMock.loadUserByUsername(userName);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
 
             if (tokenProvider.validateToken(jwt, userDetails)) {
 
