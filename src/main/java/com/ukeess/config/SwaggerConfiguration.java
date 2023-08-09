@@ -1,4 +1,4 @@
-package com.ukeess.configuration;
+package com.ukeess.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

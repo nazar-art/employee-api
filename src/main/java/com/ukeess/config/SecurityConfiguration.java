@@ -1,4 +1,4 @@
-package com.ukeess.configuration;
+package com.ukeess.config;
 
 import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.filter.JwtRequestFilter;
