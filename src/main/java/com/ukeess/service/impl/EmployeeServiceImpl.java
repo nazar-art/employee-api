@@ -2,10 +2,12 @@ package com.ukeess.service.impl;
 
 import com.ukeess.dao.impl.EmployeeDAO;
 import com.ukeess.entity.Employee;
+import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.model.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-        return postLoad(employeeDAO.save(preSave(dto)));
+        Employee fromDb = employeeDAO.getById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+        BeanUtils.copyProperties(dto, fromDb);
+        return postLoad(employeeDAO.save(fromDb));
     }
 
     @Override

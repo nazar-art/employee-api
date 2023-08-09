@@ -1,7 +1,11 @@
 package com.ukeess.dto;
 
+import lombok.Value;
+
 /**
  * @author Nazar Lelyak.
  */
-public record ErrorResponse(String message) {
+@Value(staticConstructor = "of")
+public class ErrorResponse {
+    String message;
 }
