@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,10 +51,10 @@ public class EmployeeController {
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
     public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
+            @PageableDefault Pageable pageable
+    ) {
         return ResponseEntity.ok(
-                employeeService.findAll(PageRequest.of(pageNumber, pageSize))
+                employeeService.findAll(pageable)
         );
     }
 
@@ -109,6 +111,6 @@ public class EmployeeController {
             @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize) {
 
         return ResponseEntity.ok(employeeService.searchByNameStartsWith(nameSnippet,
-                        PageRequest.of(pageNumber, pageSize)));
+                PageRequest.of(pageNumber, pageSize)));
     }
 }

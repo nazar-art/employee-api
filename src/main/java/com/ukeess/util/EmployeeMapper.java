@@ -1,8 +1,8 @@
 package com.ukeess.util;
 
-import com.ukeess.rest.dto.EmployeeDTO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
+import com.ukeess.rest.dto.EmployeeDTO;
 import lombok.experimental.UtilityClass;
 
 /**
