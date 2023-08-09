@@ -2,6 +2,9 @@ DROP TABLE IF EXISTS tblUsers;
 DROP TABLE IF EXISTS tblEmployees;
 DROP TABLE IF EXISTS tblDepartments;
 
+-- ------------------------------
+-- Create tblDepartments table
+-- ------------------------------
 CREATE TABLE IF NOT EXISTS tblDepartments
 (
     dpID   SERIAL,
@@ -9,6 +12,9 @@ CREATE TABLE IF NOT EXISTS tblDepartments
     PRIMARY KEY (dpID)
 );
 
+-- ------------------------------
+-- Create tblEmployees table
+-- ------------------------------
 CREATE TABLE IF NOT EXISTS tblEmployees
 (
     empID     SERIAL,
@@ -19,7 +25,9 @@ CREATE TABLE IF NOT EXISTS tblEmployees
     FOREIGN KEY (emp_dpID) REFERENCES tblDepartments (dpID)
 );
 
--- CREATE tblUsers table - for authorisation users
+-- ------------------------------
+-- Create tblUsers table
+-- ------------------------------
 CREATE TABLE IF NOT EXISTS tblUsers
 (
     userID       SERIAL,
