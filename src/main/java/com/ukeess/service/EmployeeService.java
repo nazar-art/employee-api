@@ -1,6 +1,6 @@
 package com.ukeess.service;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.rest.dto.EmployeeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,4 +1,4 @@
-package com.ukeess.dto;
+package com.ukeess.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

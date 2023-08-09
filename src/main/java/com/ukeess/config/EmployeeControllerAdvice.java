@@ -1,6 +1,6 @@
 package com.ukeess.config;
 
-import com.ukeess.dto.ErrorResponse;
+import com.ukeess.rest.dto.ErrorResponse;
 import com.ukeess.exception.EntityNotFoundException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -1,12 +1,9 @@
 package com.ukeess.util;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.rest.dto.EmployeeDTO;
 import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import lombok.experimental.UtilityClass;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Nazar Lelyak.

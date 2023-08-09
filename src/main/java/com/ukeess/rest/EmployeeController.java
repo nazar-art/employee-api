@@ -1,10 +1,10 @@
-package com.ukeess.controller;
+package com.ukeess.rest;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.rest.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import javax.validation.Valid;
  * @author Nazar Lelyak.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/v1/employees")
 public class EmployeeController {
 

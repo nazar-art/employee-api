@@ -1,10 +1,10 @@
-package com.ukeess.controller;
+package com.ukeess.rest;
 
 import com.ukeess.entity.Department;
 import com.ukeess.service.DepartmentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Nazar Lelyak.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/v1/departments")
 public class DepartmentController {
 

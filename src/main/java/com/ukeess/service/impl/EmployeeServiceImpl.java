@@ -1,12 +1,12 @@
 package com.ukeess.service.impl;
 
-import com.ukeess.dto.EmployeeDTO;
+import com.ukeess.rest.dto.EmployeeDTO;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;

@@ -3,7 +3,7 @@ package com.ukeess.service.impl;
 import com.ukeess.entity.Department;
 import com.ukeess.repository.DepartmentRepository;
 import com.ukeess.service.DepartmentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author Nazar Lelyak.
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
