@@ -22,7 +22,7 @@ public class EmployeeDTO implements Serializable {
 
     private Integer id;
     @NotNull
-    @Size(min = 2, max = 20)
+    @Size(min = 2, max = 25)
     private String name;
     @NotNull
     private Boolean active;

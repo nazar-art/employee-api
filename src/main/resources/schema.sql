@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS tblDepartments
 CREATE TABLE IF NOT EXISTS tblEmployees
 (
     empID     SERIAL,
-    empName   VARCHAR(20)     NOT NULL,
+    empName   VARCHAR(25)     NOT NULL,
     empActive BIT(1)          NOT NULL,
     emp_dpID  BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (empID),
