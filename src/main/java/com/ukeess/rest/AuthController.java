@@ -1,9 +1,9 @@
-package com.ukeess.controller;
+package com.ukeess.rest;
 
 import com.ukeess.exception.InvalidUserCredentialsException;
-import com.ukeess.model.constant.SecurityConstants;
-import com.ukeess.model.dto.AuthRequestDTO;
-import com.ukeess.model.dto.AuthResponseDTO;
+import com.ukeess.security.constant.SecurityConstants;
+import com.ukeess.rest.dto.AuthRequestDTO;
+import com.ukeess.rest.dto.AuthResponseDTO;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -33,11 +32,12 @@ public class AuthController {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final TokenProvider tokenProvider;
 
-    @PostMapping
-    @RequestMapping("/authenticate")
-    @ApiOperation(value = "Authenticate for working with API",
+    @PostMapping("/authenticate")
+    @ApiOperation(
+            value = "Authenticate for working with API",
             notes = "Provide a valid Credentials in a body",
-            response = AuthResponseDTO.class)
+            response = AuthResponseDTO.class
+    )
     public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@RequestBody @Valid AuthRequestDTO authRequest) {
 
         try {

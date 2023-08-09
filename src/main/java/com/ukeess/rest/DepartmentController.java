@@ -1,4 +1,4 @@
-package com.ukeess.controller;
+package com.ukeess.rest;
 
 import com.ukeess.entity.Department;
 import com.ukeess.service.DepartmentService;
@@ -25,20 +25,23 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    @ApiOperation(value = "Find All Departments", response = Department.class, responseContainer = "List")
+    @ApiOperation(
+            value = "Find All Departments", response = Department.class, responseContainer = "List"
+    )
     public ResponseEntity<List<Department>> findAllDepartments() {
-
         return ResponseEntity.ok(departmentService.findAllDepartments());
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Find Department by ID",
+    @ApiOperation(
+            value = "Find Department by ID",
             notes = "Provide an id to look up specific department",
-            response = Department.class)
+            response = Department.class
+    )
     public ResponseEntity<Department> findDepartmentById(
             @ApiParam(value = "ID value for the department you need to retrieve", required = true)
-            @PathVariable int id) {
-
+            @PathVariable int id
+    ) {
         return departmentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

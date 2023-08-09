@@ -36,10 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private User buildUserForAuthentication(AuthUser authUser) {
-
         SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authUser.getRole());
         List<GrantedAuthority> authorities = Lists.newArrayList(grantedAuthority);
-
         return new User(
                 authUser.getUserName(),
                 authUser.getPassword(),
@@ -47,6 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 true,
                 true,
                 true,
-                authorities);
+                authorities
+        );
     }
 }

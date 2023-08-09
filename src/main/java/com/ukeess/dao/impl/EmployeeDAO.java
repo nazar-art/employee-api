@@ -116,8 +116,8 @@ public class EmployeeDAO extends NamedParameterJdbcDaoSupport implements BaseDAO
     public Page<Employee> getAll(Pageable pageable) {
         return getEmployeesPage("",
                 "SELECT empID, empName, empActive, dpID, dpName " +
-                        "FROM tblEmployees, tblDepartments " +
-                        "WHERE empID=dpID " +
+                        "FROM tblDepartments, tblEmployees " +
+                        "WHERE dpID=emp_dpID " +
                         "ORDER BY empID " +
                         "LIMIT %s OFFSET %s",
                 pageable);

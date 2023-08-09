@@ -3,7 +3,7 @@ package com.ukeess.service.impl;
 import com.ukeess.dao.impl.EmployeeDAO;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
-import com.ukeess.model.dto.EmployeeDTO;
+import com.ukeess.rest.dto.EmployeeDTO;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;

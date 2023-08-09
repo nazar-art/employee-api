@@ -1,6 +1,6 @@
 package com.ukeess.security.filter;
 
-import com.ukeess.model.constant.SecurityConstants;
+import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
