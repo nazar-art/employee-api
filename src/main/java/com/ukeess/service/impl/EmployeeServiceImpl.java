@@ -2,6 +2,7 @@ package com.ukeess.service.impl;
 
 import com.ukeess.dto.EmployeeDTO;
 import com.ukeess.entity.Employee;
+import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         Employee fromDb = employeeRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Invalid ID provided at request " + id));
+                .orElseThrow(() -> new EntityNotFoundException(id));
         BeanUtils.copyProperties(dto, fromDb);
         return postLoad(employeeRepository.save(fromDb));
     }
