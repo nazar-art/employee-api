@@ -16,7 +16,7 @@ spring:
     url: jdbc:h2:mem:ukeess_db
     driverClassName: org.h2.Driver
     username: sa
-    password: password
+    password:
 
   h2:
     console:
