@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         Employee fromDb = employeeDAO.getById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
-        BeanUtils.copyProperties(dto, fromDb);
+        BeanUtils.copyProperties(dto, fromDb, "id");
         return postLoad(employeeDAO.save(fromDb));
     }
 
