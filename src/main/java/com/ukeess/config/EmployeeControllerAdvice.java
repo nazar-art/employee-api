@@ -2,6 +2,7 @@ package com.ukeess.config;
 
 import com.ukeess.dto.ErrorResponse;
 import io.jsonwebtoken.MalformedJwtException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,13 +19,19 @@ public class EmployeeControllerAdvice {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<?> handleNotFoundEmployee(NoSuchElementException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse("Invalid ID provided. This ID doesn't exists at DB"));
+                .body(ErrorResponse.of(e.getMessage()));
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<?> handleNotFoundEmployee(EmptyResultDataAccessException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of(e.getMessage()));
     }
 
     @ExceptionHandler(MalformedJwtException.class)
     public ResponseEntity<?> handleNotFoundEmployee(MalformedJwtException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse("You should authorise first"));
+                .body(ErrorResponse.of(e.getMessage()));
     }
 
 }

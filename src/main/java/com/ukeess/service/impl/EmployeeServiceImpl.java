@@ -6,10 +6,12 @@ import com.ukeess.repository.EmployeeRepository;
 import com.ukeess.service.EmployeeService;
 import com.ukeess.util.EmployeeMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -40,7 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
-            return postLoad(employeeRepository.save(preSave(dto)));
+        Employee fromDb = employeeRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Invalid ID provided at request " + id));
+        BeanUtils.copyProperties(dto, fromDb);
+        return postLoad(employeeRepository.save(fromDb));
     }
 
     @Override

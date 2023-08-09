@@ -35,9 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/api/swagger-ui.html",
-                        "/api/v2/api-docs", "/api/configuration/ui",
-                        "/api/swagger-resources/**").permitAll()
+                .antMatchers(
+                        "/authenticate",
+                        "/api/swagger-ui.html",
+                        "/api/v2/api-docs",
+                        "/api/configuration/ui",
+                        "/api/swagger-resources/**",
+                        "/api/h2-console/**"
+                ).permitAll()
                 .antMatchers("/v1/employees/**", "/v1/departments/**").authenticated()
                 .and()
                 .sessionManagement()
