@@ -32,11 +32,12 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-
     @PostMapping
-    @ApiOperation(value = "Create new Employee",
+    @ApiOperation(
+            value = "Create new Employee",
             notes = "Provide an Employee to be added in a body",
-            response = EmployeeDTO.class)
+            response = EmployeeDTO.class
+    )
     public ResponseEntity<EmployeeDTO> createEmployee(
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid EmployeeDTO employeeDTO) {
@@ -56,8 +57,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Find Employee by ID", response = EmployeeDTO.class,
-            notes = "Provide an id to look up specific employee")
+    @ApiOperation(
+            value = "Find Employee by ID",
+            response = EmployeeDTO.class,
+            notes = "Provide an id to look up specific employee"
+    )
     public ResponseEntity<EmployeeDTO> findEmployeeById(
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
             @PathVariable int id) {
@@ -67,8 +71,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update an Employee", response = EmployeeDTO.class,
-            notes = "Provide an id of employee for update, and new representation of employee")
+    @ApiOperation(
+            value = "Update an Employee",
+            response = EmployeeDTO.class,
+            notes = "Provide an id of employee for update, and new representation of employee"
+    )
     public ResponseEntity<EmployeeDTO> updateEmployee(
             @ApiParam(value = "ID value for the employee you need to update", required = true)
             @PathVariable int id,
@@ -79,8 +86,10 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete an Employee",
-            notes = "Provide an employee's id")
+    @ApiOperation(
+            value = "Delete an Employee",
+            notes = "Provide an employee's id"
+    )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(
             @ApiParam(value = "ID value for the employee you need to delete", required = true)
@@ -89,8 +98,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(notes = "Provide a name snippet", response = EmployeeDTO.class,
-            value = "Search for all Employees which name starts with provided name snippet")
+    @ApiOperation(
+            notes = "Provide a name snippet", response = EmployeeDTO.class,
+            value = "Search for all Employees which name starts with provided name snippet"
+    )
     public ResponseEntity<Page<EmployeeDTO>> searchEmployeesByNameStartsWith(
             @ApiParam(value = "Name snippet for the employee you looking for", required = true)
             @RequestParam(value = "name") String nameSnippet,

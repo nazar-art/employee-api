@@ -4,8 +4,8 @@ import com.ukeess.exception.IncorrectUserCredentialsException;
 import com.ukeess.security.TokenProvider;
 import com.ukeess.security.UserDetailsServiceMock;
 import com.ukeess.security.constant.SecurityConstants;
-import com.ukeess.security.model.AuthRequestDTO;
-import com.ukeess.security.model.AuthResponseDTO;
+import com.ukeess.security.dto.AuthRequestDTO;
+import com.ukeess.security.dto.AuthResponseDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +39,6 @@ public class AuthController {
     )
     @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@RequestBody @Valid AuthRequestDTO authRequest) {
-
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
@@ -54,7 +53,7 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(SecurityConstants.AUTHORIZATION_HEADER, String.format("%s%s", SecurityConstants.TOKEN_BEARER_PREFIX, jwt));
 
-        return new ResponseEntity<>(new AuthResponseDTO(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(AuthResponseDTO.of(jwt), httpHeaders, HttpStatus.OK);
     }
 
 }

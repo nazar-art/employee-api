@@ -23,18 +23,18 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-
     @GetMapping
     @ApiOperation(value = "Find All Departments", responseContainer = "List", response = Department.class)
     public List<Department> findAllDepartments() {
         return departmentService.findAllDepartments();
     }
 
-
     @GetMapping("/{id}")
-    @ApiOperation(value = "Find Department by ID",
+    @ApiOperation(
+            value = "Find Department by ID",
             notes = "Provide an id to look up specific department",
-            response = Department.class)
+            response = Department.class
+    )
     public ResponseEntity<Department> findDepartmentById(
             @ApiParam(value = "ID value for the department you need to retrieve", required = true)
             @PathVariable int id) {
