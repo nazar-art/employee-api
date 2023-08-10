@@ -1,6 +1,7 @@
 package com.ukeess.e2e;
 
 import com.ukeess.security.constant.SecurityConstants;
+import com.ukeess.utils.FileUtils;
 import com.ukeess.utils.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.ukeess.utils.FileUtils.readFromFile;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +44,7 @@ public class DepartmentControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(content().json(readFromFile("departments-response.json")))
+                .andExpect(content().json(FileUtils.readFromFile("departments-response.json")))
         ;
     }
 
@@ -70,7 +70,7 @@ public class DepartmentControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(content().json(readFromFile("employees-response.json")))
+                .andExpect(content().json(FileUtils.readFromFile("employees-response.json")))
         ;
     }
 
@@ -107,7 +107,7 @@ public class DepartmentControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(content().json(readFromFile("new-employee-response.json")))
+                .andExpect(content().json(FileUtils.readFromFile("new-employee-response.json")))
         ;
     }
 
@@ -131,7 +131,7 @@ public class DepartmentControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(content().json(readFromFile("update-employee-response.json")))
+                .andExpect(content().json(FileUtils.readFromFile("update-employee-response.json")))
         ;
     }
 

@@ -16,7 +16,7 @@ spring:
     initialization-mode: always
     url: 'jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC'
     username: 'root'
-    password: secret
+    password: 'secret'
     driverClassName: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -26,12 +26,12 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        #        dialect: org.hibernate.dialect.H2Dialect
         dialect: org.hibernate.dialect.MySQL5Dialect
+        #dialect: org.hibernate.dialect.H2Dialect
 
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: true
 
 # ===============================
 # = LOGGING
