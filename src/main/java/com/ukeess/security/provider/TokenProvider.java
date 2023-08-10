@@ -28,6 +28,7 @@ public class TokenProvider {
         Map<String, Object> claims = Maps.newHashMap();
         return createToken(claims, userDetails.getUsername());
     }
+
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)

@@ -2,7 +2,11 @@ package com.ukeess.security.filter;
 
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.security.provider.TokenProvider;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,27 +35,34 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader(SecurityConstants.AUTHORIZATION_HEADER);
-
         String userName = null;
         String jwt = null;
 
-        if (authHeader != null && authHeader.startsWith(SecurityConstants.TOKEN_BEARER_PREFIX)) {
-            jwt = authHeader.substring(SecurityConstants.TOKEN_BEARER_PREFIX.length());
-            userName = tokenProvider.extractUsername(jwt);
-        }
-
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-
-            if (tokenProvider.validateToken(jwt, userDetails)) {
-
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
-                        null, userDetails.getAuthorities());
-
-                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(token);
+        try {
+            if (authHeader != null && authHeader.startsWith(SecurityConstants.TOKEN_BEARER_PREFIX)) {
+                jwt = authHeader.substring(SecurityConstants.TOKEN_BEARER_PREFIX.length());
+                userName = tokenProvider.extractUsername(jwt);
             }
+
+            if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
+
+
+                if (tokenProvider.validateToken(jwt, userDetails)) {
+
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,
+                            null, userDetails.getAuthorities());
+
+                    token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(token);
+                }
+            }
+        } catch (ExpiredJwtException | MalformedJwtException e) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().write(e.getMessage());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            return;
         }
         filterChain.doFilter(request, response);
     }

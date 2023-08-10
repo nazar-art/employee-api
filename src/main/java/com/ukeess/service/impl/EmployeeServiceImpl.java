@@ -1,5 +1,6 @@
 package com.ukeess.service.impl;
 
+import com.ukeess.entity.Department;
 import com.ukeess.entity.Employee;
 import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.repository.EmployeeRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -44,7 +46,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         Employee fromDb = employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
+
         BeanUtils.copyProperties(dto, fromDb, "id");
+        Department newDepartment = Department.builder()
+                .id(dto.getDepartmentId())
+                .name(dto.getDepartmentName())
+                .build();
+        if (!Objects.equals(fromDb.getDepartment(), newDepartment)) {
+            fromDb.setDepartment(newDepartment);
+        }
+
         return postLoad(employeeRepository.save(fromDb));
     }
 

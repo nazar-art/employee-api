@@ -1,14 +1,33 @@
+server:
+  port: 8383
 
 spring:
   # ===============================
   # = DATA SOURCE
   # ===============================
+  #  datasource:
+  #    url: jdbc:h2:mem:ukeess_test_db
+  #    username: sa
+  #    password:
+  #    initialization-mode: always
+  #    driverClassName: org.h2.Driver
+
   datasource:
     initialization-mode: always
-    url: jdbc:h2:mem:ukeess_test_db
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: 'jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC'
+    username: 'root'
+    password: secret
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    generate-ddl: true
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        #        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
   h2:
     console:
@@ -24,5 +43,5 @@ logging:
     sql: debug
     web: debug
 
-token:
-  secret_key_mock: 'my-token-secret'
+#token:
+#  secret_key_mock: 'my-token-secret'

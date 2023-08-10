@@ -1,9 +1,10 @@
 package com.ukeess.rest;
 
+import com.ukeess.config.RestControllerAdvice;
 import com.ukeess.entity.Department;
-import com.ukeess.rest.utils.SecurityUtils;
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.service.DepartmentService;
+import com.ukeess.utils.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(value = RestControllerAdvice.class)
 class DepartmentRestControllerTest {
 
     private static final int DEPARTMENT_ID_ONE = 11;
@@ -94,12 +97,27 @@ class DepartmentRestControllerTest {
         mockMvc.perform(get(DEPARTMENTS_URI)
                         .header(
                                 SecurityConstants.AUTHORIZATION_HEADER,
-                                SecurityUtils.generateToken("some-incorrect-name")
+                                SecurityUtils.generateToken("some-incorrect-name", false)
                         )
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andDo(print())
                 .andExpect(status().isForbidden());
+        verifyNoInteractions(departmentService);
+    }
+
+    @Test
+    void findAllDepartments_WithExpiredToken() throws Exception {
+        mockMvc.perform(get(DEPARTMENTS_URI)
+                        .header(
+                                SecurityConstants.AUTHORIZATION_HEADER,
+                                SecurityUtils.generateExpiredToken()
+                        )
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
         verifyNoInteractions(departmentService);
     }
 
@@ -138,11 +156,26 @@ class DepartmentRestControllerTest {
     @Test
     void findDepartmentById_WithWrongToken() throws Exception {
         mockMvc.perform(get(DEPARTMENT_URI)
-                        .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken("Tomas"))
+                        .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken("Tomas", false))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andDo(print())
                 .andExpect(status().isForbidden());
+        verifyNoInteractions(departmentService);
+    }
+
+    @Test
+    void findDepartmentById_WithExpiredToken() throws Exception {
+        mockMvc.perform(get(DEPARTMENT_URI)
+                        .header(
+                                SecurityConstants.AUTHORIZATION_HEADER,
+                                SecurityUtils.generateExpiredToken()
+                        )
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
         verifyNoInteractions(departmentService);
     }
 
