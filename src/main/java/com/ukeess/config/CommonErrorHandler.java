@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @author Nazar Lelyak.
  */
 @ControllerAdvice
-public class RestControllerAdvice {
+public class CommonErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFoundException(EntityNotFoundException e) {

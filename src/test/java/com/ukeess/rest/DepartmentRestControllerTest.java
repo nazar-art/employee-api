@@ -1,6 +1,6 @@
 package com.ukeess.rest;
 
-import com.ukeess.config.RestControllerAdvice;
+import com.ukeess.config.CommonErrorHandler;
 import com.ukeess.entity.Department;
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.service.DepartmentService;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(value = RestControllerAdvice.class)
+@Import(value = CommonErrorHandler.class)
 class DepartmentRestControllerTest {
 
     private static final int DEPARTMENT_ID_ONE = 11;

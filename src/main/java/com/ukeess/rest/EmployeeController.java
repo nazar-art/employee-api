@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 /**
  * @author Nazar Lelyak.
@@ -44,8 +46,13 @@ public class EmployeeController {
             @ApiParam(value = "Employee object to be created", required = true)
             @RequestBody @Valid EmployeeDTO employeeDTO) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(employeeService.create(employeeDTO));
+        EmployeeDTO saved = employeeService.create(employeeDTO);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(saved.getId())
+                .toUri();
+        return ResponseEntity.created(location)
+                .body(saved);
     }
 
     @GetMapping
