@@ -5,19 +5,19 @@ spring:
   # ===============================
   # = DATA SOURCE
   # ===============================
-  #  datasource:
-  #    url: jdbc:h2:mem:ukeess_test_db
-  #    username: sa
-  #    password:
-  #    initialization-mode: always
-  #    driverClassName: org.h2.Driver
-
   datasource:
-    initialization-mode: always
-    url: 'jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC'
-    username: 'root'
-    password: 'secret'
+### TEST CONTAINERS
+#  datasource:
+#    url: jdbc:tc:postgresql:11:///ukeess_db?TC_REUSABLE=true
+#    username: test
+#    password: test
+#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+
+    url: jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: secret
     driverClassName: com.mysql.cj.jdbc.Driver
+    initialization-mode: ALWAYS
 
   jpa:
     generate-ddl: true
@@ -26,13 +26,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        #        dialect: org.hibernate.dialect.DerbyTenSevenDialect
         dialect: org.hibernate.dialect.MySQL5Dialect
-        #dialect: org.hibernate.dialect.H2Dialect
-
-#  h2:
-#    console:
-#      enabled: true
 
 # ===============================
 # = LOGGING
@@ -43,6 +37,3 @@ logging:
     org.hibernate: debug
     sql: debug
     web: debug
-
-#token:
-#  secret_key_mock: 'my-token-secret'

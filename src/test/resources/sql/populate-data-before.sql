@@ -1,28 +1,31 @@
 -- delete from tblEmployees;
--- delete from tblDepartments;
+-- delete
+-- from tblDepartments;
 
 truncate table tblDepartments;
 truncate table tblEmployees;
+truncate table tblUsers;
+
+-- ------------------------------
+-- Populate tblUsers table
+-- ------------------------------
+INSERT INTO tblUsers (userName, userPass, userActive, userRole)
+VALUES ('harry', 'potter', true, 'ADMIN');
 
 -- ------------------------------
 -- Populate tblDepartments table
 -- ------------------------------
 INSERT INTO tblDepartments (dpName)
-VALUES ('Gryffindor');
-INSERT INTO tblDepartments (dpName)
-VALUES ('Hufflepuff');
-INSERT INTO tblDepartments (dpName)
-VALUES ('Ravenclaw');
-INSERT INTO tblDepartments (dpName)
-VALUES ('Slytherin');
+VALUES ('Gryffindor'),
+       ('Hufflepuff'),
+       ('Ravenclaw'),
+       ('Slytherin');
 
 -- ------------------------------
 -- Populate tblEmployees table
 -- ------------------------------
-INSERT INTO tblEmployees (empName, empActive, emp_dpid)
-VALUES ('Hagrid', true, 1);
-INSERT INTO tblEmployees (empName, empActive, emp_dpid)
-VALUES ('Luna', false, 2);
-INSERT INTO tblEmployees (empName, empActive, emp_dpid)
-VALUES ('Robert', false, 3);
+INSERT INTO tblEmployees (empName, empActive, empCreatedAt, empUpdatedAt, emp_dpID)
+VALUES ('Hagrid', true, now(), now(), 1),
+       ('Luna', false, now(), now(), 2),
+       ('Robert', false, now(), now(), 3);
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 /**
  * @author Nazar Lelyak.
@@ -26,4 +27,8 @@ public class EmployeeDTO {
 
     private Integer departmentId;
     private String departmentName;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
 }

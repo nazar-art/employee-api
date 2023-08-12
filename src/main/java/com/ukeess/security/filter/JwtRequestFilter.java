@@ -1,5 +1,6 @@
 package com.ukeess.security.filter;
 
+import com.ukeess.exception.EntityNotFoundException;
 import com.ukeess.security.constant.SecurityConstants;
 import com.ukeess.security.provider.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -58,12 +59,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(token);
                 }
             }
-        } catch (ExpiredJwtException | MalformedJwtException e) {
+        } catch (ExpiredJwtException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write(e.getMessage());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             return;
+
+        } catch (EntityNotFoundException | MalformedJwtException e) {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.getWriter().write(e.getMessage());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            return;
         }
+
         filterChain.doFilter(request, response);
     }
 }

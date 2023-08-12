@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         Employee fromDb = employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
 
         BeanUtils.copyProperties(dto, fromDb, "id");
         Department newDepartment = Department.builder()

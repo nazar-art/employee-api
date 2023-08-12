@@ -3,3 +3,4 @@
 
 truncate table tblDepartments;
 truncate table tblEmployees;
+truncate table tblUsers;

@@ -39,18 +39,18 @@ Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-  "name": "Fernando Magelan",
+  "name": "Jordano Bruno",
   "departmentId": 3,
-  "active": true,
+  "active": false,
   "departmentName": "Ravenclaw"
 }
 
 ### GET new employee
-GET localhost:8080/api/v1/employees/19
+GET localhost:8080/api/v1/employees/11
 Authorization: Bearer {{auth_token}}
 
 ### UDPATE employee
-PUT localhost:8080/api/v1/employees/19
+PUT localhost:8080/api/v1/employees/11
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
@@ -63,7 +63,7 @@ Content-Type: application/json
 }
 
 ### DELETE employee
-DELETE localhost:8080/api/v1/employees/19
+DELETE localhost:8080/api/v1/employees/11
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 

@@ -5,6 +5,10 @@ import com.ukeess.entity.Employee;
 import com.ukeess.rest.dto.EmployeeDTO;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 /**
  * @author Nazar Lelyak.
  */
@@ -17,9 +21,18 @@ public class EmployeeMapper {
                 .id(employee.getId())
                 .name(employee.getName())
                 .active(employee.getActive())
+                .createdAt(toLocalDateTime(employee.getCreatedAt()))
+                .updatedAt(toLocalDateTime(employee.getUpdatedAt()))
                 .departmentId(empDepartment.getId())
                 .departmentName(empDepartment.getName())
                 .build();
+    }
+
+    private static LocalDateTime toLocalDateTime(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     public Employee mapToEmployee(EmployeeDTO dto) {
