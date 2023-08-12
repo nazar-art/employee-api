@@ -1,11 +1,11 @@
 package com.ukeess.security.provider;
 
 import com.google.common.collect.Maps;
-import com.ukeess.config.TokenConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,8 @@ public class TokenProvider {
 
     private static final int TOKEN_EXPIRATION_HOURS = 240; // 10 days
 
-    private final TokenConfiguration configuration;
+    @Value("${token.secret_key}")
+    private String tokenSecret;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = Maps.newHashMap();
@@ -35,7 +36,7 @@ public class TokenProvider {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * TOKEN_EXPIRATION_HOURS))
-                .signWith(SignatureAlgorithm.HS256, configuration.getSecretKeyMock()).compact();
+                .signWith(SignatureAlgorithm.HS256, tokenSecret).compact();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
@@ -63,7 +64,7 @@ public class TokenProvider {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(configuration.getSecretKeyMock())
+                .setSigningKey(tokenSecret)
                 .parseClaimsJws(token)
                 .getBody();
     }

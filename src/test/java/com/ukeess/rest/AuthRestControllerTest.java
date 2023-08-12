@@ -1,6 +1,5 @@
 package com.ukeess.rest;
 
-import com.ukeess.config.TokenConfiguration;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,22 +31,18 @@ class AuthRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private TokenConfiguration configuration;
-
     private static final String REQUEST_BODY_STUB = """
             {
-              "username": "%s",
-              "password": "%s"
+              "username": "harry",
+              "password": "potter"
             }
             """;
 
     @Test
     void generateToken_Success() throws Exception {
-        String body = String.format(REQUEST_BODY_STUB, configuration.getUsernameMock(), configuration.getPasswordMock());
         mockMvc.perform(post("/authenticate")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(body))
+                        .content(REQUEST_BODY_STUB))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))

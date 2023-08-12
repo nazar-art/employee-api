@@ -61,6 +61,4 @@ logging:
 # = MOCK DETAILS
 # ===============================
 token:
-  secret_key_mock: 'my-token-secret'
-  username_mock: 'harry'
-  password_mock: 'potter'
+  secret_key: 'my-token-secret'
