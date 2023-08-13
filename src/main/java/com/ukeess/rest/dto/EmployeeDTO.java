@@ -23,9 +23,12 @@ public class EmployeeDTO {
     @NotNull
     @Size(min = 2, max = 25)
     private String name;
+    @NotNull
     private Boolean active;
 
+    @NotNull
     private Integer departmentId;
+    @NotNull
     private String departmentName;
 
     private LocalDateTime createdAt;
