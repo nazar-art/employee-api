@@ -6,18 +6,17 @@ spring:
   # = DATA SOURCE
   # ===============================
   datasource:
-### TEST CONTAINERS
-#  datasource:
-#    url: jdbc:tc:postgresql:11:///ukeess_db?TC_REUSABLE=true
-#    username: test
-#    password: test
-#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-
     url: jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: secret
     driverClassName: com.mysql.cj.jdbc.Driver
     initialization-mode: ALWAYS
+
+    ### TEST CONTAINERS
+#    url: jdbc:tc:mysql:8.1.0:///ukeess_db?TC_REUSABLE=true
+#    username: test
+#    password: test
+#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
 
   jpa:
     generate-ddl: true
