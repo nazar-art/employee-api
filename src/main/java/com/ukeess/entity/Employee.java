@@ -40,8 +40,8 @@ public class Employee {
     private Integer id;
 
     @NotEmpty
-    @Size(min = 2, max = 25)
-    @Column(name = "empName", length = 25)
+    @Size(min = 2, max = 24)
+    @Column(name = "empName")
     private String name;
 
     @Column(name = "empActive")

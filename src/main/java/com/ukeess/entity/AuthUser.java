@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -28,19 +29,19 @@ public class AuthUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userID")
+    @Column(name = "usrID")
     private Integer id;
 
     @NotNull
-    @Column(name = "userName")
+    @Column(name = "usrName")
     private String name;
 
     @ToString.Exclude
-    @Column(name = "userPass")
+    @Column(name = "usrPass")
     private String password;
 
-    @Column(name = "userActive")
+    @Column(name = "usrActive")
     private Boolean active;
-    @Column(name = "userRole")
+    @Column(name = "usrRole")
     private String role;
 }

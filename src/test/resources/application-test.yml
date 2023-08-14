@@ -6,26 +6,16 @@ spring:
   # = DATA SOURCE
   # ===============================
   datasource:
-    url: jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: secret
-    driverClassName: com.mysql.cj.jdbc.Driver
-    initialization-mode: ALWAYS
+#    url: jdbc:mysql://localhost:3306/ukeess_test_db?createDatabaseIfNotExist=true&serverTimezone=UTC
+#    username: root
+#    password: secret
 
     ### TEST CONTAINERS
-#    url: jdbc:tc:mysql:8.1.0:///ukeess_db?TC_REUSABLE=true
-#    username: test
-#    password: test
-#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:8.1.0:///ukeess_db?TC_REUSABLE=true
+    username: test
+    password: test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
 
-  jpa:
-    generate-ddl: true
-    show-sql: false
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
 
 # ===============================
 # = LOGGING

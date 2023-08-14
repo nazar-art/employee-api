@@ -1,6 +1,6 @@
 package com.ukeess;
 
-/*import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MapPropertySource;
 import org.testcontainers.containers.MySQLContainer;
@@ -31,4 +31,4 @@ public class StandaloneApplicationContextInitializer implements ApplicationConte
         var dependencies = new MapPropertySource("dependencies", runDependencies());
         env.getPropertySources().addFirst(dependencies);
     }
-}*/
+}

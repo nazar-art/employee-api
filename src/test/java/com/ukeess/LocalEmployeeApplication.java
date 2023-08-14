@@ -1,6 +1,6 @@
 package com.ukeess;
 
-/*import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 public class LocalEmployeeApplication {
     public static void main(String[] args) {
@@ -8,4 +8,4 @@ public class LocalEmployeeApplication {
                 .initializers(new StandaloneApplicationContextInitializer())
                 .run(args);
     }
-}*/
+}

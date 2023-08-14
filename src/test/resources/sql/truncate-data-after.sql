@@ -1,6 +1,9 @@
+-- delete from tblUsers;
 -- delete from tblEmployees;
 -- delete from tblDepartments;
 
-truncate table tblDepartments;
-truncate table tblEmployees;
-truncate table tblUsers;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE tblDepartments;
+TRUNCATE TABLE tblEmployees;
+TRUNCATE TABLE tblUsers;
+SET FOREIGN_KEY_CHECKS = 1;

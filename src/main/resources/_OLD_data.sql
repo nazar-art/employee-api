@@ -27,7 +27,7 @@ VALUES ('Harry', true, now(), now(), 1),
 -- ------------------------------
 -- Populate tblUsers table
 -- ------------------------------
-INSERT INTO tblUsers (userName, userPass, userActive, userRole)
+INSERT INTO tblUsers (usrName, usrPass, usrActive, usrRole)
 VALUES ('harry', 'potter', true, 'ADMIN'),
        ('ron', 'weasley', true, 'ADMIN'),
        ('hermione', 'granger', true, 'USER');

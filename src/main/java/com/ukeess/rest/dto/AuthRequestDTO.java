@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public class AuthRequestDTO implements Serializable {
+    @Serial
     private static final long serialVersionUID = 0L;
 
     @NotNull

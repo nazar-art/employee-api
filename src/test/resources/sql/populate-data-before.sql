@@ -1,15 +1,17 @@
+-- delete from tblUsers;
 -- delete from tblEmployees;
--- delete
--- from tblDepartments;
+-- delete from tblDepartments;
 
-truncate table tblDepartments;
-truncate table tblEmployees;
-truncate table tblUsers;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE tblDepartments;
+TRUNCATE TABLE tblEmployees;
+TRUNCATE TABLE tblUsers;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ------------------------------
 -- Populate tblUsers table
 -- ------------------------------
-INSERT INTO tblUsers (userName, userPass, userActive, userRole)
+INSERT INTO tblUsers(usrName, usrPass, usrActive, usrRole)
 VALUES ('harry', 'potter', true, 'ADMIN');
 
 -- ------------------------------
@@ -25,7 +27,7 @@ VALUES ('Gryffindor'),
 -- Populate tblEmployees table
 -- ------------------------------
 INSERT INTO tblEmployees (empName, empActive, empCreatedAt, empUpdatedAt, emp_dpID)
-VALUES ('Hagrid', true, now(), now(), 1),
-       ('Luna', false, now(), now(), 2),
-       ('Robert', false, now(), now(), 3);
+VALUES ('Hagrid',   true,   now(), now(), 1),
+       ('Luna',     false,  now(), now(), 2),
+       ('Robert',   false,  now(), now(), 3);
 
