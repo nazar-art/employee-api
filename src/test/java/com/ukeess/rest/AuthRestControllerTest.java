@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,18 +35,17 @@ class AuthRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String REQUEST_BODY_STUB = """
-            {
-              "username": "harry",
-              "password": "potter"
-            }
-            """;
 
     @Test
     void generateToken_Success() throws Exception {
         mockMvc.perform(post("/authenticate")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(REQUEST_BODY_STUB))
+                        .content("""
+                                {
+                                  "username": "harry",
+                                  "password": "potter"
+                                }
+                                """))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -70,13 +70,13 @@ class AuthRestControllerTest {
 
     private static Stream<Arguments> invalidParams() {
         return Stream.of(
-                Arguments.of("name", "hello", "pass", "world"),
-                Arguments.of("", "hello", "pass", "world"),
-                Arguments.of("name", "hello", "", "world"),
-                Arguments.of("name", "h", "pass", "world"),
-                Arguments.of("name", "hello", "pass", "wor"),
-                Arguments.of("name", "itisaverylongusernametoolong", "pass", "world"),
-                Arguments.of("name", "hello", "pass", "verylonguserpassword")
+                Arguments.of("name", "hello",                       "pass", "world"),
+                Arguments.of("",     "hello",                       "pass", "world"),
+                Arguments.of("name", "hello",                       "",     "world"),
+                Arguments.of("name", "h",                           "pass", "world"),
+                Arguments.of("name", "hello",                       "pass", "wor"),
+                Arguments.of("name", "itisaverylongusernametoolong","pass", "world"),
+                Arguments.of("name", "hello",                       "pass", "verylonguserpassword")
         );
     }
 }

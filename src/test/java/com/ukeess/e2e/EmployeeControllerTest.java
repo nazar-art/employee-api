@@ -73,20 +73,17 @@ public class EmployeeControllerTest {
 
     @Test
     void postEmployee() throws Exception {
-        String requestJson = """
+        mockMvc.perform(post("/v1/employees")
+                        .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken())
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("""
                 {
                   "name": "Fernando Magelan",
                   "departmentId": 3,
                   "active": true,
                   "departmentName": "Ravenclaw"
                 }
-                """;
-
-        mockMvc.perform(post("/v1/employees")
-                        .header(SecurityConstants.AUTHORIZATION_HEADER, SecurityUtils.generateToken())
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(requestJson)
-                )
+                """))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))

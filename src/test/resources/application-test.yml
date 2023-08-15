@@ -1,7 +1,12 @@
+debug: true
+
 server:
   port: 8383
 
 spring:
+  application:
+    admin:
+      enabled: false
   # ===============================
   # = DATA SOURCE
   # ===============================
@@ -11,18 +16,29 @@ spring:
 #    password: secret
 
     ### TEST CONTAINERS
-    url: jdbc:tc:mysql:8.1.0:///ukeess_db?TC_REUSABLE=true
+    url: jdbc:tc:mysql:8.1.0:///ukeess_test_db?TC_REUSABLE=true
     username: test
     password: test
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+  test:
+    database:
+      replace: none
+  flyway:
+    enabled: false
 
 # ===============================
 # = LOGGING
 # ===============================
 logging:
   level:
-    com.ukeess: debug
+    org.springframework.test.context.cache: DEBUG
     org.hibernate: debug
+    com.ukeess: debug
     sql: debug
     web: debug

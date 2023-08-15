@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,12 +37,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Nazar Lelyak.
  */
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(value = CommonErrorHandler.class)
 @Sql(value = {"/sql/add-admin-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/sql/eliminate-admin-user-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Import(value = CommonErrorHandler.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
 class DepartmentRestControllerTest {
 
     private static final int DEPARTMENT_ID_ONE = 11;

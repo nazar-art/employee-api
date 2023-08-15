@@ -4,8 +4,8 @@
 - [x] update PUT
 - [x] cover controllers with tests
 - [x] add authorization with DB users instead of mock 
-- [ ] add rest assured 
-- [ ] move DB to test containers with Postgress DB 
-- [ ] set up local runner
-- [ ] add DB tests with DB Rider
+- [x] add rest assured 
+- [x] move DB to test containers with MySQL DB 
+- [x] set up local runner
+- [ ] add DB tests for repository level
 - [ ] consider adding API for swagger
