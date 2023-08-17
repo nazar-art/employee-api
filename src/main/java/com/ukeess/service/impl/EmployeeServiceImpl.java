@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -31,31 +32,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<EmployeeDTO> findAll(Pageable pageable) {
         return employeeRepository.findAll(pageable)
                 .map(this::postLoad);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<EmployeeDTO> findById(Integer id) {
         return employeeRepository.findById(id)
                 .map(this::postLoad);
     }
 
     @Override
+    @Transactional
     public EmployeeDTO update(Integer id, EmployeeDTO dto) {
         Employee fromDb = employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
 
         BeanUtils.copyProperties(dto, fromDb, "id");
-        Department newDepartment = Department.builder()
-                .id(dto.getDepartmentId())
-                .name(dto.getDepartmentName())
-                .build();
+
+        Department newDepartment = Department.of(dto.getDepartmentId(), dto.getDepartmentName());
         if (!Objects.equals(fromDb.getDepartment(), newDepartment)) {
             fromDb.setDepartment(newDepartment);
         }
-
         return postLoad(employeeRepository.save(fromDb));
     }
 
@@ -65,6 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<EmployeeDTO> searchByNameStartsWith(String name, Pageable pageable) {
         return employeeRepository.findAllByNameIgnoreCaseStartsWith(name, pageable)
                 .map(this::postLoad);

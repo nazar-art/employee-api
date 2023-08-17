@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @Table(name = "tblDepartments")
 @Builder
 public class Department {
