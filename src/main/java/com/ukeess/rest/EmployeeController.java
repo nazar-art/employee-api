@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class EmployeeController {
     @GetMapping
     @ApiOperation(value = "Find All Employees", response = EmployeeDTO.class)
     public ResponseEntity<Page<EmployeeDTO>> findAllEmployees(
-            @PageableDefault Pageable pageable
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable
     ) {
         return ResponseEntity.ok(
                 employeeService.findAll(pageable)

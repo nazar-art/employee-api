@@ -34,15 +34,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = true)
     public Page<EmployeeDTO> findAll(Pageable pageable) {
-        return employeeRepository.findAll(pageable)
-                .map(this::postLoad);
+//        return employeeRepository.findAll(pageable)
+//                .map(this::postLoad);
+        return employeeRepository.getAllDtos(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<EmployeeDTO> findById(Integer id) {
-        return employeeRepository.findById(id)
-                .map(this::postLoad);
+//        return employeeRepository.findById(id)
+//                .map(this::postLoad);
+        return employeeRepository.getEmployeeDtoById(id);
     }
 
     @Override
@@ -68,8 +70,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = true)
     public Page<EmployeeDTO> searchByNameStartsWith(String name, Pageable pageable) {
-        return employeeRepository.findAllByNameIgnoreCaseStartsWith(name, pageable)
-                .map(this::postLoad);
+        return employeeRepository.findAllByNameIgnoreCaseStartsWith(name, pageable);
+//                .map(this::postLoad);
     }
 
 

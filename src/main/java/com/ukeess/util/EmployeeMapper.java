@@ -21,8 +21,10 @@ public class EmployeeMapper {
                 .id(employee.getId())
                 .name(employee.getName())
                 .active(employee.getActive())
-                .createdAt(toLocalDateTime(employee.getCreatedAt()))
-                .updatedAt(toLocalDateTime(employee.getUpdatedAt()))
+//                .createdAt(toLocalDateTime(employee.getCreatedAt()))
+//                .updatedAt(toLocalDateTime(employee.getUpdatedAt()))
+                .createdAt(employee.getCreatedAt())
+                .updatedAt(employee.getUpdatedAt())
                 .departmentId(empDepartment.getId())
                 .departmentName(empDepartment.getName())
                 .build();
