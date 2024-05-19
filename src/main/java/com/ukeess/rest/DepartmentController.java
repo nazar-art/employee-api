@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 /**
  * @author Nazar Lelyak.
  */
@@ -39,6 +42,10 @@ public class DepartmentController {
             @ApiParam(value = "ID value for the department you need to retrieve", required = true)
             @PathVariable int id) {
         return departmentService.findById(id)
+                .map(department -> department.add(
+                        linkTo(methodOn(DepartmentController.class).findDepartmentById(id)).withSelfRel(),
+                        linkTo(methodOn(DepartmentController.class).findAllDepartments()).withRel("findAll")
+                ))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

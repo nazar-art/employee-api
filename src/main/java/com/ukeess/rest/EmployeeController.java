@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import javax.validation.Valid;
 import java.net.URI;
 
@@ -76,6 +79,10 @@ public class EmployeeController {
             @ApiParam(value = "ID value for the employee you need to retrieve", required = true)
             @PathVariable int id) {
         return employeeService.findById(id)
+                .map(emp -> emp.add(
+                        linkTo(methodOn(EmployeeController.class).findEmployeeById(id)).withSelfRel(),
+                        linkTo(methodOn(EmployeeController.class).createEmployee(EmployeeDTO.builder().build())).withRel("createEmployee")
+                ))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

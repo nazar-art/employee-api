@@ -3,7 +3,11 @@ package com.ukeess.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,13 +21,14 @@ import javax.validation.constraints.Size;
 /**
  * @author Nazar Lelyak.
  */
-@Data
+//@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 @Table(name = "tblDepartments")
 @Builder
-public class Department {
+@Getter @Setter @ToString
+public class Department extends RepresentationModel<Department> {
 
     @Id
     @Column(name = "dpID")
