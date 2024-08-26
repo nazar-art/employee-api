@@ -22,7 +22,7 @@
     <properties>
         <java.version>11</java.version>
         <swagger-version>1.5.21</swagger-version>
-        <swagger-springfox-version>2.9.2</swagger-springfox-version>
+        <swagger-springfox-version>2.10.0</swagger-springfox-version>
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
